@@ -17,7 +17,7 @@ body {
 #radar-screen {
     width: 600px;
     height: 400px;
-    background-color: var(--radar-bg);
+    background-color: skyblue;
     border-radius: 20px;
     position: relative;
     /* สำคัญ: เพื่อให้วัตถุข้างในอ้างอิงตำแหน่งได้ */
@@ -35,6 +35,7 @@ body {
     transition: transform 0.1s;
     /* คุณสามารถแก้ CSS ตรงนี้ได้เลย เช่นใส่เงาหรือเปลี่ยนรูป */
     filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    transform: scaleY(-1);
 }
 
 /* ปรับแต่งวัตถุจำลอง (Objects) */
@@ -95,6 +96,7 @@ body {
     height: 500px;
     background: var(--ai-zone-color);
     border: 1px dashed rgba(255, 255, 255, 0.2);
+    animation: beep 1s ease-in-out infinite;
 }
 
 .zone-tof {
@@ -102,6 +104,19 @@ body {
     height: 170px;
     background: var(--tof-zone-color);
     border: 1px solid rgba(255, 70, 70, 0.3);
+    animation: beep 1s ease-in-out infinite;
+}
+    
+@keyframes beep {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
 }
 
 /* ส่วนควบคุมและ Log */
@@ -130,6 +145,7 @@ button {
     border-radius: 10px;
     overflow-y: auto;
     font-family: monospace;
+    margin-top: 20px;
 }
 
 .alert-ai {

@@ -19,7 +19,7 @@
         <div id="ai-circle" class="zone zone-ai"></div>
         <div id="tof-circle" class="zone zone-tof"></div>
         
-        <img src="user.png" id="user-element" class="user" alt="user">
+        <img src="img/user.png" id="user-element" class="user" alt="user">
     </div>
 
     <div id="alertBox"></div>
@@ -41,15 +41,17 @@
 
         // จัดการรูปภาพ
         const imageMap = {
-            'รถยนต์': 'car.png',
-            'คนเดิน': 'person_walk.png',
-            'เสาไฟฟ้า': 'eletric_column.png',
-            'มอเตอร์ไซค์': 'bike.png',
-            'จักรยาน': 'bikecycle.png',
-            'สุนัข': 'dog.png',
-            'ถังขยะ': 'bin.png',
-            'พิเศษ': 'the_flash.png',
-            'default': 'sign.png'
+            'รถยนต์': 'img/car.png',
+            'คนเดิน': 'img/person_walk.png',
+            'เสาไฟฟ้า': 'img/eletric_column.png',
+            'มอเตอร์ไซค์': 'img/bike.png',
+            'จักรยาน': 'img/bikecycle.png',
+            'สุนัข': 'img/dog.png',
+            'ถังขยะ': 'img/bin.png',
+            'คนวิ่ง': 'img/the_flash.png',
+            'ป้ายจราจร': 'img/sign.png',
+            'กระจกใส': 'img/glass.png',
+            'default': ''
         };
 
         // วางตำแหน่งเริ่มต้นให้ User และ Zone
@@ -88,12 +90,12 @@
                 let dy = config.userY - this.y;
                 let dist = Math.hypot(dx, dy);
 
-                if (this.speed > 0) {
+                if (this.speed > 2) { // วัตถุที่เคลื่อนที่ได้จะเดินเข้าหา User
                     let angle = Math.atan2(dy, dx);
                     this.x += Math.cos(angle) * this.speed;
                     this.y += Math.sin(angle) * this.speed;
                 } else {
-                    this.y += 1.2; // จำลอง User เดินเข้าหาวัตถุที่อยู่นิ่ง
+                    this.y += 1; // จำลอง User เดินเข้าหาวัตถุที่อยู่นิ่ง
                 }
 
                 // ตรวจจับระยะ AI
@@ -108,7 +110,11 @@
                     this.detectedToF = true;
                     this.el.classList.add('detected-emergency'); // ใช้ CSS Class ในการเปลี่ยนสี/ใส่เงา
                     let side = this.x < config.userX ? 'ซ้าย' : 'ขวา';
-                    log(`🚨 [BEEP]: ${this.name} ประชิดตัวทาง${side}!`, 'alert-tof');
+                    if(this.name === 'กระจกใส') {
+                        log(`🚨 [AI]: มี ${this.name} ทาง${side}`, 'alert-tof');
+                    } else {
+                        log(`🚨 [BEEP]: ${this.name} ประชิดตัวทาง${side}!`, 'alert-tof');
+                    }
                 }
 
                 // ตรวจสอบการชน
@@ -143,10 +149,13 @@
         }
 
         function spawnRandom() {
-            const list = ['มอเตอร์ไซค์', 'จักรยาน', 'สุนัข', 'ถังขยะ', 'พิเศษ'];
+            const list = ['มอเตอร์ไซค์', 'จักรยาน', 'สุนัข', 'ถังขยะ', 'คนวิ่ง', 'ป้ายจราจร', 'กระจกใส'];
             let name = list[Math.floor(Math.random() * list.length)];
             let rx = Math.random() * 500 + 50;
-            let rs = Math.random() * 3 + 1;
+
+            let rs;
+            if (name === 'ถังขยะ' || name === 'ป้ายจราจร' || name === 'กระจกใส') rs = 0;
+            else rs = Math.random() * 5;
             activeObjects.push(new SimObject(name, rx, -50, rs));
         }
 
