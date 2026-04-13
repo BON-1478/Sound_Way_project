@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Sound Way Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>SOUND WAY</h1>
+    <div class="controls">
+        <button onclick="spawn('รถยนต์')">🚗 จำลองรถ</button>
+        <button onclick="spawn('คนเดิน')">🚶 คนเดิน</button>
+        <button onclick="spawn('เสาไฟฟ้า')">💈 เสาไฟฟ้า</button>
+        <button onclick="spawnRandom()" style="background:#28a745">🎲 สุ่มวัตถุ</button>
+    </div>
+
+    <div id="radar-screen">
+        <div id="ai-circle" class="zone zone-ai"></div>
+        <div id="tof-circle" class="zone zone-tof"></div>
+        
+        <img src="user.png" id="user-element" class="user" alt="user">
+    </div>
+
+    <div id="alertBox"></div>
+
+    <script>
+        const screen = document.getElementById('radar-screen');
+        const userEl = document.getElementById('user-element');
+        const alertBox = document.getElementById('alertBox');
+
+        // การตั้งค่าตำแหน่ง (หน่วยเป็นพิกเซล)
+        const config = {
+            width: 600,
+            height: 400,
+            userX: 300,
+            userY: 350,
+            aiRadius: 250,
+            tofRadius: 85
+        };
+
+        // จัดการรูปภาพ
+        const imageMap = {
+            'รถยนต์': 'car.png',
+            'คนเดิน': 'person_walk.png',
+            'เสาไฟฟ้า': 'eletric_column.png',
+            'มอเตอร์ไซค์': 'bike.png',
+            'จักรยาน': 'bikecycle.png',
+            'สุนัข': 'dog.png',
+            'ถังขยะ': 'bin.png',
+            'พิเศษ': 'the_flash.png',
+            'default': 'sign.png'
+        };
+
+        // วางตำแหน่งเริ่มต้นให้ User และ Zone
+        userEl.style.left = `${config.userX - 25}px`;
+        userEl.style.top = `${config.userY - 25}px`;
+        document.getElementById('ai-circle').style.left = `${config.userX}px`;
+        document.getElementById('ai-circle').style.top = `${config.userY}px`;
+        document.getElementById('tof-circle').style.left = `${config.userX}px`;
+        document.getElementById('tof-circle').style.top = `${config.userY}px`;
+
+        // --- [ส่วนที่ 2: JavaScript Class สำหรับจัดการวัตถุ] ---
+        class SimObject {
+            constructor(name, x, y, speed) {
+                this.name = name;
+                this.x = x;
+                this.y = y;
+                this.speed = speed;
+                this.isDead = false;
+                this.detectedAI = false;
+                this.detectedToF = false;
+
+                // สร้าง HTML Element สำหรับวัตถุนี้
+                this.el = document.createElement('div');
+                this.el.className = 'sim-object';
+                this.el.innerHTML = `
+                    <span class="object-label">${name}</span>
+                    <img src="${imageMap[name] || imageMap['default']}">
+                `;
+                screen.appendChild(this.el);
+                this.updateDOM();
+            }
+
+            update() {
+                // คำนวณการเคลื่อนที่
+                let dx = config.userX - this.x;
+                let dy = config.userY - this.y;
+                let dist = Math.hypot(dx, dy);
+
+                if (this.speed > 0) {
+                    let angle = Math.atan2(dy, dx);
+                    this.x += Math.cos(angle) * this.speed;
+                    this.y += Math.sin(angle) * this.speed;
+                } else {
+                    this.y += 1.2; // จำลอง User เดินเข้าหาวัตถุที่อยู่นิ่ง
+                }
+
+                // ตรวจจับระยะ AI
+                if (dist < config.aiRadius && !this.detectedAI) {
+                    this.detectedAI = true;
+                    let side = this.x < config.userX ? 'ซ้าย' : 'ขวา';
+                    log(`🔊 [AI]: มี ${this.name} ทาง${side}`, 'alert-ai');
+                }
+
+                // ตรวจจับระยะ ToF
+                if (dist < config.tofRadius && !this.detectedToF) {
+                    this.detectedToF = true;
+                    this.el.classList.add('detected-emergency'); // ใช้ CSS Class ในการเปลี่ยนสี/ใส่เงา
+                    let side = this.x < config.userX ? 'ซ้าย' : 'ขวา';
+                    log(`🚨 [BEEP]: ${this.name} ประชิดตัวทาง${side}!`, 'alert-tof');
+                }
+
+                // ตรวจสอบการชน
+                if (dist < 35) {
+                    log(`💥 ชนกับ ${this.name}!`, 'white');
+                    this.destroy();
+                }
+
+                // ตรวจสอบการหลุดขอบจอ
+                if (this.y > config.height + 50) this.destroy();
+
+                this.updateDOM();
+            }
+
+            updateDOM() {
+                if (this.isDead) return;
+                this.el.style.left = `${this.x - 20}px`;
+                this.el.style.top = `${this.y - 20}px`;
+            }
+
+            destroy() {
+                this.isDead = true;
+                this.el.remove();
+            }
+        }
+
+        let activeObjects = [];
+
+        function spawn(name) {
+            let x = name === 'รถยนต์' ? 100 : (name === 'คนเดิน' ? 500 : 300);
+            activeObjects.push(new SimObject(name, x, -50, name === 'เสาไฟฟ้า' ? 0 : 2));
+        }
+
+        function spawnRandom() {
+            const list = ['มอเตอร์ไซค์', 'จักรยาน', 'สุนัข', 'ถังขยะ', 'พิเศษ'];
+            let name = list[Math.floor(Math.random() * list.length)];
+            let rx = Math.random() * 500 + 50;
+            let rs = Math.random() * 3 + 1;
+            activeObjects.push(new SimObject(name, rx, -50, rs));
+        }
+
+        function log(msg, cls) {
+            let d = document.createElement('div');
+            d.className = cls;
+            d.innerHTML = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            alertBox.prepend(d);
+        }
+
+        // Game Loop
+        function loop() {
+            activeObjects = activeObjects.filter(obj => !obj.isDead);
+            activeObjects.forEach(obj => obj.update());
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+    </script>
+</body>
+</html>
