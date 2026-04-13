@@ -1,0 +1,247 @@
+html, body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+nav {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 20px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+nav .logo img {
+    height: 40px;
+}
+
+.hamberger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamberger .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-list{
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list li {
+    margin-left: 20px;
+}
+
+.nav-list li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav .acount{
+    gap: 8px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.acount button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+button svg{
+    width: 30px;
+    height: 20px;
+}
+
+section {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 50px;
+    box-sizing: border-box;
+    background: #f0f2f5;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.leftside {
+    flex: 1;
+    padding: 20px;
+}
+
+.leftside a{
+    color: rgb(215, 98, 245);
+    text-decoration: none;
+}
+
+.leftside a:hover {
+    text-decoration: underline;
+    text-decoration-color: rgb(0, 0, 0);
+}
+
+.carousel{
+    width: 100%;
+    overflow-x: auto;
+    margin: 3em auto;
+    display: flex;
+    gap: 1em;
+    scroll-behavior: smooth;
+    anchor-name: --carousel;
+    scroll-snap-type: x mandatory;
+}
+
+.carousel::-webkit-scrollbar {
+    display: none; /* ซ่อน Scrollbar ใน WebKit browsers */
+}
+
+.carousel::scroll-button(right), .carousel::scroll-button(left) {
+    content: "→";
+    border: none;
+    background-color: rgba(215, 98, 245, 0.5);
+    font-family: Consolas;
+    font-size: 2rem;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    padding-bottom: .1em;
+    cursor: pointer;
+    color: white;
+    position: fixed;
+    position-anchor: --carousel;
+    position-area: right center;
+}
+
+.carousel::scroll-button(left){
+    content: "←";
+    position-area: left center;
+}
+
+
+.carousel::scroll-button(right):disabled, .carousel::scroll-button(left):disabled{
+    opacity: 0.5;
+    cursor: auto;
+}
+
+.card{
+    scroll-snap-align: start;
+    flex: 0 0 10em;
+    aspect-ratio: 5 / 3;
+    background-color: var(--primary-color);
+    padding: 1em;
+    text-align: center;
+    align-content: center;
+}
+
+footer {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    margin: 0;
+    padding: 20% 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.icon-list {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.icon{
+    color: white;
+    text-decoration: none;
+}
+
+footer .icon svg {
+    width: 30px;
+    height: 20px;
+}
+
+footer .icon:hover {
+    color: rgb(215, 98, 245);
+}
+
+footer .icon:hover svg {
+    filter: drop-shadow(0 0 5px rgb(215, 98, 245));
+}
+
+footer .icon:active {
+    color: rgb(0, 0, 0);
+}
+
+footer p{
+    font-size: .8em;
+}
+
+@media (max-width: 500px) {
+    .card{
+        flex: 0 0 100%;
+    }
+}
+
+@media (max-width: 768px) {
+  .hamberger { /* โชว์ปุ่มสามขีด */
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    }
+
+    .acount {
+        display: none; /* ซ่อนปุ่ม Login/Signup */
+    }
+
+  .nav-list {
+    display: none; 
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 70px; /* แนะนำให้ปรับ top ลงมาอีกนิดเพื่อไม่ให้ทับกับ Navbar (ลองกะระยะดูครับ) */
+    left: 0;
+    background: #444;
+    gap: 5px;
+    z-index: 100; /* เพิ่ม z-index เพื่อให้เมนูที่กางลงมาอยู่ด้านหน้าสุด ทับเนื้อหาอื่น */
+  }
+
+  /* คลาสสำหรับสั่งให้โชว์เมนู (จะใช้ JS ช่วยเพิ่มคลาสนี้) */
+  .nav-list.active {
+    display: flex;
+  }
+}

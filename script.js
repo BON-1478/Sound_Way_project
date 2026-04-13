@@ -1,11 +1,11 @@
 
-function scrollSlider(direction) {
-  const slider = document.getElementById('slider');
-  const scrollAmount = 300; // ระยะที่ต้องการให้เลื่อนใน 1 คลิก (px)
+const menu = document.querySelector('#mobile-menu');
+const navList = document.querySelector('.nav-list');
+
+menu.addEventListener('click', function() {
+  // สลับการเพิ่ม/ลบ class 'active'
+  navList.classList.toggle('active');
   
-  if (direction === 1) {
-    slider.scrollLeft += scrollAmount;
-  } else {
-    slider.scrollLeft -= scrollAmount;
-  }
-}
+  // เสริม: ใส่ Animation ให้ปุ่มสามขีดเปลี่ยนเป็นตัว X (ถ้าต้องการ)
+  menu.classList.toggle('is-active');
+});
