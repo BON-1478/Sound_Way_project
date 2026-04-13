@@ -1,0 +1,105 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+}
+
+#gameCanvas {
+    background-color: #00cc66;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    background-color: #063b0f;
+    color: white;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #063b0fcc;
+}
+
+button:nth-child(4) {
+    background-color: #ff9900;
+}
+
+button:nth-child(4):hover {
+    background-color: #ff9900cc;
+}
+
+#alertBox {
+    width: 600px;
+    height: 150px;
+    background-color: #333;
+    color: #00ffcc;
+    padding: 15px;
+    border-radius: 10px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.alert-ai {
+    color: #f7e7a9;
+}
+
+.alert-tof {
+    color: #ff3366;
+}
+
+.alert-collision {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.object {
+    position: absolute;
+    border-radius: 5px;
+}
+
+.car {
+    width: 60px;
+    height: 30px;
+    background-color: #007bff;
+}
+
+.pedestrian {
+    width: 20px;
+    height: 20px;
+    background-color: #ff9900;
+}
+
+.pole {
+    width: 10px;
+    height: 50px;
+    background-color: #666666;
+}
+
+.user {
+    width: 30px;
+    height: 30px;
+    background-color: #00cc66;
+    border-radius: 50%;
+    position: absolute;
+    left: 285px;
+    top: 350px;
+}
