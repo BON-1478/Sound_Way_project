@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <title>Sound Way Simulation</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <nav>
+        <div class="logo">
+            <img src="img/SOUND WAY_white.svg" alt="Sound Way Logo">
+        </div>
+        <div class="hamberger" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div>
+            <ul class="nav-list">
+                <li><a href="http://127.0.0.1:3000/index.html?vscode-livepreview=true">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="acount">
+            <button class="login-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-box-arrow-in-right"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+                    <path fill-rule="evenodd"
+                        d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                </svg>
+            </button>
+            <button class="signup-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
+                    viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path fill-rule="evenodd"
+                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                </svg>
+            </button>
+        </div>
+    </nav>
 
     <h1>SOUND WAY</h1>
     <div class="controls">
@@ -18,13 +57,28 @@
     <div id="radar-screen">
         <div id="ai-circle" class="zone zone-ai"></div>
         <div id="tof-circle" class="zone zone-tof"></div>
-        
+
         <img src="img/user.png" id="user-element" class="user" alt="user">
     </div>
 
     <div id="alertBox"></div>
 
     <script>
+
+        // navbar toggle
+        const menu = document.querySelector('#mobile-menu');
+        const navList = document.querySelector('.nav-list');
+
+        menu.addEventListener('click', function () {
+            // สลับการเพิ่ม/ลบ class 'active'
+            navList.classList.toggle('active');
+
+            // เสริม: ใส่ Animation ให้ปุ่มสามขีดเปลี่ยนเป็นตัว X (ถ้าต้องการ)
+            menu.classList.toggle('is-active');
+        });
+
+        // end of navbar toggle
+
         const screen = document.getElementById('radar-screen');
         const userEl = document.getElementById('user-element');
         const alertBox = document.getElementById('alertBox');
@@ -110,7 +164,7 @@
                     this.detectedToF = true;
                     this.el.classList.add('detected-emergency'); // ใช้ CSS Class ในการเปลี่ยนสี/ใส่เงา
                     let side = this.x < config.userX ? 'ซ้าย' : 'ขวา';
-                    if(this.name === 'กระจกใส') {
+                    if (this.name === 'กระจกใส') {
                         log(`🚨 [AI]: มี ${this.name} ทาง${side}`, 'alert-tof');
                     } else {
                         log(`🚨 [BEEP]: ${this.name} ประชิดตัวทาง${side}!`, 'alert-tof');
@@ -145,7 +199,7 @@
 
         function spawn(name) {
             let x = name === 'รถยนต์' ? 100 : (name === 'คนเดิน' ? 500 : 300);
-            activeObjects.push(new SimObject(name, x, -50, name === 'เสาไฟฟ้า' ? 0 : 2));
+            activeObjects.push(new SimObject(name, x, -50, name === 'เสาไฟฟ้า' ? 0 : 4));
         }
 
         function spawnRandom() {
@@ -176,4 +230,5 @@
         loop();
     </script>
 </body>
+
 </html>

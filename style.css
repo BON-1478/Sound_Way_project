@@ -11,6 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
 }
 
 /* หน้าจอเรดาร์ */
@@ -155,4 +156,73 @@ button {
 .alert-tof {
     color: #ff5252;
     font-weight: bold;
+}
+
+
+nav {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 20px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+nav .logo img {
+    height: 40px;
+}
+
+.hamberger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamberger .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-list{
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list li {
+    margin-left: 20px;
+}
+
+.nav-list li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav .acount{
+    gap: 8px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.acount button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+button svg{
+    width: 30px;
+    height: 20px;
 }
