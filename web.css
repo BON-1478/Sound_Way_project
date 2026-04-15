@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Athiti:wght@200;300;400;500;600;700&family=Bebas+Neue&family=Changa+One:ital@0;1&family=Creepster&family=Dancing+Script:wght@400..700&family=Oswald:wght@200..700&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 
-:root{
+:root {
     /* theme blue */
     --blue-main: #a8d8ea;
     --blue-soft: #dff6ff;
@@ -12,7 +12,7 @@
     --brown-deep: #a67b5b;
     /* theme neutral */
     --white: #ffffff;
-    --cream:  #faf8f4;
+    --cream: #faf8f4;
     --gray-light: #eaeaea;
     --gray-text: #555555;
     /* accent */
@@ -22,12 +22,17 @@
     --font-nav: 'Changa One', cursive;
 }
 
-html, body {
+html,
+body {
     font-family: Arial, sans-serif;
     background-color: var(--cream);
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 body {
@@ -42,7 +47,7 @@ body {
 
 nav {
     width: 90%;
-    background-color: #a8d8ea9a;
+    background-color: #a67b5b9a;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(5px);
     display: flex;
@@ -53,7 +58,6 @@ nav {
     border-radius: 50px;
     position: fixed;
     top: 10px;
-    z-index: 1000;
 }
 
 nav .logo img {
@@ -71,73 +75,64 @@ nav .logo img {
     height: 3px;
     margin: 5px auto;
     border-radius: 20px;
-    background-color: var(--blue-deep);
+    background-color: var(--brown-deep);
     transition: all 0.3s ease-in-out;
 }
 
-.nav-list{
+.hamberger:hover .bar {
+    background-color: var(--accent);
+    filter: drop-shadow(0 0 5px var(--accent));
+}
+
+.nav-list {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
+    gap: 30px;
 }
 
-.nav-list li {
-    margin-left: 20px;
-    margin: 0 20px;
-}
-
-.nav-list li a {
-    color: var(--blue-deep);
+.nav-list a {
+    color: var(--brown-deep);
     text-decoration: none;
     font-size: 1.1em;
     font-family: var(--font-nav);
 }
 
-.nav-list li a:hover {
+.nav-list a:hover {
     color: var(--accent);
+    filter: drop-shadow(0 0 5px var(--accent));
 }
 
-.nav-list .cover:hover{
-    background: var(--glassmorphism-bg);
-    backdrop-filter: blur(2px); /* เพิ่มความโปร่งใสและเบลอพื้นหลัง */
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    color: var(--accent);
-    width: 100%;
-    text-align: center;
-}
+nav .acount {
+    display: flex;
+    padding: 0 5px;
 
-nav .acount{
-    gap: 8px;
-    padding: 5px 5px;
-    border-radius: 4px;
-    color: var(--white);
-    text-decoration: none;
-    font-size: 16px;
 }
 
 .acount button {
     background: none;
     border: none;
-    color: var(--white);
     cursor: pointer;
 }
 
-button svg{
-    width: 1.5em;
-    height: 1.5em;
-    color: var(--blue-deep);
+button svg {
+    width: 1.8em;
+    height: 1.8em;
+    color: var(--brown-deep);
+}
+
+button svg:hover {
+    color: var(--accent);
+    filter: drop-shadow(0 0 5px var(--accent));
 }
 
 section {
     flex: 1;
     width: 100%;
-    max-width: 1200px;
     padding: 60px 50px 0 50px;
     box-sizing: border-box;
-    background: #f0f2f5;
+    background: var(--cream);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -150,17 +145,19 @@ section {
     padding: 20px;
 }
 
-.leftside a{
-    color: rgb(215, 98, 245);
+.leftside a {
+    color: var(--blue-deep);
     text-decoration: none;
+    font-size: 1rem;
+    font-family: var(--font-nav);
 }
 
 .leftside a:hover {
     text-decoration: underline;
-    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-color: var(--blue-deep);
 }
 
-.carousel{
+.carousel {
     width: 100%;
     overflow-x: auto;
     margin: 3em auto;
@@ -172,13 +169,15 @@ section {
 }
 
 .carousel::-webkit-scrollbar {
-    display: none; /* ซ่อน Scrollbar ใน WebKit browsers */
+    display: none;
+    /* ซ่อน Scrollbar ใน WebKit browsers */
 }
 
-.carousel::scroll-button(right), .carousel::scroll-button(left) {
+.carousel::scroll-button(right),
+.carousel::scroll-button(left) {
     content: "→";
     border: none;
-    background-color: rgba(215, 98, 245, 0.5);
+    background-color: var(--brown-main);
     font-family: Consolas;
     font-size: 2rem;
     height: 30px;
@@ -192,18 +191,24 @@ section {
     position-area: right center;
 }
 
-.carousel::scroll-button(left){
+.carousel::scroll-button(left) {
     content: "←";
     position-area: left center;
 }
 
+.carousel::scroll-button(left):active,
+.carousel::scroll-button(right):active {
+    background-color: var(--accent);
+    transition: opacity 0.5s ease-in-out;
+}
 
-.carousel::scroll-button(right):disabled, .carousel::scroll-button(left):disabled{
-    opacity: 0.5;
+.carousel::scroll-button(right):disabled,
+.carousel::scroll-button(left):disabled {
+    opacity: 0;
     cursor: auto;
 }
 
-.card{
+.card {
     scroll-snap-align: start;
     flex: 0 0 10em;
     aspect-ratio: 5 / 3;
@@ -211,12 +216,20 @@ section {
     padding: 1em;
     text-align: center;
     align-content: center;
+    background-color: var(--brown-main);
+    border-radius: 20px;
+}
+
+.card:hover {
+    background-color: var(--brown-deep);
+    color: var(--white);
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 footer {
     width: 100%;
-    background-color: var(--blue-deep);
-    color: white;
+    background-color: var(--brown-deep);
+    color: var(--white);
     padding: 10px 0;
     margin: 0;
     padding: 20% 0;
@@ -224,7 +237,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
 }
 
 .icon-list {
@@ -233,8 +246,8 @@ footer {
     gap: 15px;
 }
 
-.icon{
-    color: white;
+.icon {
+    color: var(--white);
     text-decoration: none;
 }
 
@@ -244,89 +257,99 @@ footer .icon svg {
 }
 
 footer .icon:hover {
-    color: rgb(215, 98, 245);
+    color: var(--accent);
 }
 
 footer .icon:hover svg {
-    filter: drop-shadow(0 0 5px rgb(215, 98, 245));
+    filter: drop-shadow(0 0 5px var(--accent));
 }
 
 footer .icon:active {
-    color: rgb(0, 0, 0);
+    color: var(--white);
 }
 
-footer p{
-    font-size: .8em;
+footer p {
+    font-size: 1rem;
 }
 
 @media (max-width: 500px) {
-    .card{
+    .card {
         flex: 0 0 100%;
     }
 }
 
 @media (max-width: 768px) {
-  .hamberger { /* โชว์ปุ่มสามขีด */
-    display: block;
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    .hamberger {
+        /* โชว์ปุ่มสามขีด */
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
     }
 
     .acount {
         position: absolute;
-        top: 20px;
+        top: 22px;
         right: 45px;
     }
 
-  .nav-list {
-    display: none; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: absolute;
-    top: 70px; /* แนะนำให้ปรับ top ลงมาอีกนิดเพื่อไม่ให้ทับกับ Navbar (ลองกะระยะดูครับ) */
-    right: 5px;
-    background: var(--glassmorphism-bg);
-    backdrop-filter: blur(2px); /* เพิ่มความโปร่งใสและเบลอพื้นหลัง */
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    padding: 10px;
-    gap: 5px;
-    z-index: 100; /* เพิ่ม z-index เพื่อให้เมนูที่กางลงมาอยู่ด้านหน้าสุด ทับเนื้อหาอื่น */
-    animation: floatingBox 3s ease-in-out infinite; /* เพิ่มแอนิเมชันให้เมนูลอยขึ้นลง */
-}
-
-  .nav-list li a{
-    color: var(--gray-text);
-  }
-
-  .nav-list .cover {
-    width: 90%; /* ทำให้ width เท่ากันและเกือบเต็มช่อง */
-    text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
-  }
-
-  .nav-list .cover:hover, .nav-list li a:hover {
-    background: var(--blue-main);
-    color: var(--white);
-  }
-
-  /* คลาสสำหรับสั่งให้โชว์เมนู (จะใช้ JS ช่วยเพิ่มคลาสนี้) */
-  .nav-list.active {
-    display: flex;
-  }
-
-  @keyframes floatingBox {
-    0%{
-        transform: translateY(0);
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        position: absolute;
+        top: 80px;
+        /* แนะนำให้ปรับ top ลงมาอีกนิดเพื่อไม่ให้ทับกับ Navbar (ลองกะระยะดูครับ) */
+        right: 5px;
+        background-color: #a67b5b9a;
+        backdrop-filter: blur(3px);
+        border-radius: 10px;
+        padding: 15px 10px;
+        gap: 5px;
+        width: 150px;
+        height: 150px;
+        z-index: 999;
+        /* เพิ่ม z-index เพื่อให้เมนูที่กางลงมาอยู่ด้านหน้าสุด ทับเนื้อหาอื่น */
+        animation: floatingBox 3s ease-in-out infinite;
+        /* เพิ่มแอนิเมชันให้เมนูลอยขึ้นลง */
     }
-    50%{
-        transform: translateY(-10px);
+
+    .nav-list a {
+        color: var(--white);
+        width: 95%;
+        height: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    100%{
-        transform: translateY(0);
+
+
+    .nav-list a:hover {
+        background: var(--accent);
+        opacity: 0.5;
+        color: var(--brown-deep);
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out, color 0.2s ease-in-out;
     }
-  }
+
+    /* คลาสสำหรับสั่งให้โชว์เมนู (จะใช้ JS ช่วยเพิ่มคลาสนี้) */
+    .nav-list.active {
+        display: flex;
+    }
+
+    @keyframes floatingBox {
+        0% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
 }
