@@ -54,7 +54,7 @@ body {
 
 nav {
     width: 90%;
-    background-color: #7cb9e89a;
+    background-color: #7cb9e8c2;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(5px);
     display: flex;
@@ -64,6 +64,8 @@ nav {
     box-sizing: border-box;
     border-radius: 50px;
     position: fixed;
+    border: 3px solid white;
+    box-shadow: inset 0px 0px 50px -3px var(--blue-soft);
     top: 10px;
     z-index: 999;
 }
@@ -88,7 +90,7 @@ nav .logo img {
 }
 
 .hamberger:hover .bar {
-    background-color: var(--white);
+    background-color: var(--brown-main);
     filter: drop-shadow(0 0 5px var(--white));
 }
 
@@ -111,7 +113,7 @@ nav .logo img {
 
 .nav-list a:hover {
     color: var(--brown-main);
-    filter: drop-shadow(0 0 5px var(--brown-main));
+    filter: drop-shadow(0 0 5px var(--white));
 }
 
 nav .acount {
@@ -134,47 +136,13 @@ button svg {
 
 button svg:hover {
     color: var(--brown-main);
-    filter: drop-shadow(0 0 5px var(--brown-main));
-}
-
-#prop-container{
-    position: static;
-    width: 100vw;
-    height: 100vh;
-    border: 2px solid red;
-    top: 0;
-    left: 0;
-    background-color: var(--blue-main);
-    z-index: 0;
-}
-
-.prop{
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    z-index: 0;
-}
-
-.prop:nth-child(1){
-    width: 200px;
-    height: 200px;
-    background-color: var(--blue-deep);
-    top: 50%;
-    left: 50%;
-    filter: blur(20px);
+    filter: drop-shadow(0 0 5px var(--white));
 }
 
 section {
-    flex: 1;
     width: 100%;
-    padding: 60px 50px 0 50px;
+    padding: 0 50px;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
     z-index: 10;
 }
 
@@ -206,6 +174,24 @@ section {
 .leftside a:hover {
     text-decoration: underline;
     text-decoration-color: var(--blue-deep);
+}
+
+main {
+    flex: 1;
+    width: 100%;
+    padding: 60px 50px 0 50px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    z-index: 10;
+}
+
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
 }
 
 .carousel {
@@ -261,26 +247,30 @@ section {
 }
 
 .card {
-    scroll-snap-align: start;
-    flex: 0 0 10em;
-    aspect-ratio: 5 / 3;
+    scroll-snap-align: center;
+    flex: 0 0 30em;
+    aspect-ratio: 16 / 9;
     padding: 1em;
     text-align: center;
     align-content: center;
     background: none;
     border: 2px solid var(--brown-deep);
-    border-radius: 20px;
 }
 
 .card:hover {
     background-color: var(--brown-deep);
     color: var(--white);
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    cursor: grab;
+}
+
+.card:active {
+    cursor: grabbing;
 }
 
 footer {
     width: 100%;
-    background-color: var(--blue-deep);
+    background-color: #7cb9e8c2;
     color: var(--white);
     padding: 10px 0;
     margin: 0;
@@ -290,6 +280,10 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 20px;
+    backdrop-filter: blur(3px);
+    box-shadow: inset 0px 0px 50px -3px var(--blue-soft);
+    border-top: 3px solid white;
+    border-radius: 30px 30px 0 0;
     z-index: 10;
 }
 
@@ -302,6 +296,7 @@ footer {
 .icon {
     color: var(--white);
     text-decoration: none;
+    aspect-ratio: 1 / 1;
 }
 
 footer .icon svg {
@@ -323,6 +318,221 @@ footer .icon:active {
 
 footer p {
     font-size: 1rem;
+}
+
+#simulation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 0 6em 0;
+}
+
+/* simulation */
+/* หน้าจอเรดาร์ */
+#radar-screen {
+    width: 600px;
+    max-width: 600px;
+    height: 400px;
+    background-color: #7cb9e8c2;
+    border-radius: 20px;
+    position: relative;
+    /* สำคัญ: เพื่อให้วัตถุข้างในอ้างอิงตำแหน่งได้ */
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0px 0px 50px -3px var(--blue-soft);
+    border: 4px solid white;
+}
+
+/* ปรับแต่งตัวผู้ใช้ (User) */
+.user {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 10;
+    transition: transform 0.1s;
+    /* คุณสามารถแก้ CSS ตรงนี้ได้เลย เช่นใส่เงาหรือเปลี่ยนรูป */
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    transform: translateX(-50%) scaleY(-1);
+}
+
+/* ปรับแต่งวัตถุจำลอง (Objects) */
+.sim-object {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.sim-object img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ชื่อวัตถุที่ลอยอยู่บนหัว */
+.object-label {
+    color: white;
+    font-size: 10px;
+    white-space: nowrap;
+    margin-bottom: 2px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1px 4px;
+    border-radius: 4px;
+}
+
+/* เอฟเฟกต์เมื่อเข้าใกล้ (ToF Detected) */
+.detected-emergency {
+    filter: drop-shadow(0 0 10px red) brightness(1.2);
+    animation: blink 0.5s infinite alternate;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.7;
+    }
+}
+
+/* รัศมีการตรวจจับ */
+.zone {
+    position: absolute;
+    border-radius: 50%;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    pointer-events: none;
+}
+
+.zone-ai {
+    width: 500px;
+    height: 500px;
+    background: var(--ai-zone-color);
+    border: 3px dashed var(--brown-deep);
+}
+
+.zone-tof {
+    width: 170px;
+    height: 170px;
+    background: var(--tof-zone-color);
+    border: 2px dashed rgba(255, 70, 70, 0.3);
+}
+
+.cloneAi{
+    width: 500px;
+    height: 500px;
+    background: var(--ai-zone-color);
+    animation: beepAi 1s ease-in-out infinite;
+}
+
+.cloneTof{
+    width: 170px;
+    height: 170px;
+    background: var(--tof-zone-color);
+    border: 1px solid rgba(255, 70, 70, 0.3);
+    animation: beepTof 1s ease-in-out infinite;
+}
+
+@keyframes beepAi {
+    0% {
+        opacity: 0.5;
+        width: 0;
+        height: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
+        width: 1000px;
+        height: 1000px;
+    }
+}
+
+@keyframes beepTof{
+    0% {
+        opacity: 0.5;
+        width: 0;
+        height: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
+        width: 170px;
+        height: 170px;
+    }
+}
+
+/* ส่วนควบคุมและ Log */
+.controls {
+    margin: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 80%;
+    justify-content: center;
+}
+
+.controls button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #a67b5be3;
+    box-shadow: inset 0px 0px 40px -8px var(--brown-soft);
+    color: var(--white);
+    cursor: pointer;
+}
+
+.controls button:nth-child(4){
+    background: #7cb9e8c2;
+    box-shadow: inset 0px 0px 40px -8px var(--blue-soft);
+}
+
+.controls button:hover{
+    transform: scale(1.1);
+    transition: .1s ease-in-out;
+}
+
+#alertBox {
+    width: 600px;
+    height: 150px;
+    background: #a67b5ba4;
+    box-shadow: inset 0px 0px 40px -3px var(--brown-soft);
+    color: #ff0000;
+    padding: 15px;
+    border-radius: 10px;
+    overflow-y: auto;
+    font-family: monospace;
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+#alertBox::-webkit-scrollbar {
+    display: none;
+}
+
+.alert-ai {
+    color: #ffca28;
+}
+
+.alert-tof {
+    color: #ff6a00;
+    font-weight: bold;
 }
 
 @media (max-width: 500px) {
@@ -356,7 +566,8 @@ footer p {
         top: 80px;
         /* แนะนำให้ปรับ top ลงมาอีกนิดเพื่อไม่ให้ทับกับ Navbar (ลองกะระยะดูครับ) */
         right: 5px;
-        background-color: #a67b5b9a;
+        background-color: #7cb9e8c2;
+        box-shadow: inset 0px 0px 50px -3px var(--blue-soft);
         backdrop-filter: blur(3px);
         border-radius: 10px;
         padding: 15px 10px;
@@ -380,11 +591,10 @@ footer p {
 
 
     .nav-list a:hover {
-        background: var(--accent);
-        opacity: 0.5;
-        color: var(--brown-deep);
+        background: var(--brown-main);
+        color: var(--white);
         border-radius: 5px;
-        transition: background-color 0.3s ease-in-out, color 0.2s ease-in-out;
+        transition: background-color 0.4s ease-in-out, color 0.2s ease-in-out;
     }
 
     /* คลาสสำหรับสั่งให้โชว์เมนู (จะใช้ JS ช่วยเพิ่มคลาสนี้) */

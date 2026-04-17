@@ -21,7 +21,7 @@
         <div>
             <ul class="nav-list">
                 <a href="#home">HOME</a>
-                <a href="simulation.html">SIMULATION</a>
+                <a href="#simulation">SIMULATION</a>
                 <a href="#contract">CONTACT</a>
             </ul>
         </div>
@@ -45,23 +45,8 @@
             </button>
         </div>
     </nav>
-    <div id="prop-container">
-        <div class="prop"></div>
-        <div class="prop"></div>
-        <div class="prop"></div>
-        <div class="prop"></div>
-        <div class="prop"></div>
-        <div class="prop"></div>
-    </div>
-    <!-- main -->
-    <section id="home">
-        <div class="leftside">
-            <h1>Welcome to Smart Headphones 🎧<br> Simulation</h1>
-            <p>Experience the future of sound with our cutting-edge earbuds simulation. Explore the features and
-                capabilities of our smart earbuds in a virtual environment.</p>
-            <a href="simulation.html" class="cta-button">Try the Simulation <span>👈</span></a>
-        </div>
-
+    
+    <main id="home">
         <div class="carousel" id="slider">
             <div class="card">Card 1</div>
             <div class="card">Card 2</div>
@@ -74,7 +59,35 @@
             <div class="card">Card 4</div>
             <div class="card">Card 5</div>
         </div>
+    </main>
 
+    <!-- main -->
+    <section>
+        <div class="leftside">
+            <h1>Welcome to Smart Headphones 🎧<br> Simulation</h1>
+            <p>Experience the future of sound with our cutting-edge earbuds simulation. Explore the features and
+                capabilities of our smart earbuds in a virtual environment. <br><br>🚧🏃🚌🛤️🏗️🤖👇👇
+            </p>
+        </div>
+    </section>
+
+    <section id="simulation">
+        <div class="controls">
+            <button onclick="spawn('รถยนต์')">🚗 จำลองรถ</button>
+            <button onclick="spawn('คนเดิน')">🚶 คนเดิน</button>
+            <button onclick="spawn('เสาไฟฟ้า')">💈 เสาไฟฟ้า</button>
+            <button onclick="spawnRandom()">🎲 สุ่มวัตถุ</button>
+        </div>
+        <div id="radar-screen">
+            <div class="road"></div>
+            <div class="zone cloneAi"></div>
+            <div class="zone cloneTof"></div>
+            <div id="ai-circle" class="zone zone-ai"></div>
+            <div id="tof-circle" class="zone zone-tof"></div>
+            <img src="img/user.png" id="user-element" class="user" alt="user">
+        </div>
+        <div id="alertBox"></div>
+    </section>
     </section>
     <!-- footer -->
     <footer id="contract">
