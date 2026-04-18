@@ -77,6 +77,27 @@ slider.addEventListener('touchmove', (e) => {
     slider.scrollLeft = scrollLeft - dx;
 });
 
+// Hover caruosel
+let isHover = false;
+
+slider.addEventListener('mouseenter', (e) => {
+    isHover = true;
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener('mouseleave', () => {
+    isHover = false;
+});
+
+slider.addEventListener('mousemove', (e) => {
+    if (!isHover) return;
+
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2;
+    slider.scrollLeft = scrollLeft - walk;
+});
+
 // Typing text
 const featureDetails = {
     1: "◉ ระบบตัดเสียงรบกวน Active Noise Cancelling ปรับระดับอัตโนมัติ",
