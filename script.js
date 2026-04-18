@@ -101,31 +101,42 @@ slider.addEventListener('mousemove', (e) => {
 // Typing text
 const featureDetails = {
     1: "◉ ระบบตัดเสียงรบกวน Active Noise Cancelling ปรับระดับอัตโนมัติ",
-    2: "◉ เซนเซอร์ ToF ตรวจจับระยะประชิด ป้องกันการเดินชนสิ่งกีดขวาง",
+    2: "◉ เซนเซอร์ ToF ตรวจจับระยะประชิด ป้องกันการเดินชนสิ่งกีดขวาง ◉ สัมผัสการรับรู้รอบทิศทาง 360° เหนือขีดจำกัดสายตา ด้วยระบบแจ้งเตือนอัจฉริยะที่ช่วยให้คุณ 'เห็น' อันตรายก่อนที่จะเกิดขึ้นจริง",
     3: "◉ ดีไซน์ Ergonomic สวมใส่สบาย ไม่หลุดง่ายขณะออกกำลังกาย",
     4: "◉ แบตเตอรี่อึด ใช้งานต่อเนื่องได้สูงสุด 24 ชั่วโมง",
     5: "◉ เคสชาร์จรองรับ Wireless Charging และ Fast Charge"
 };
 
 let typingTimer;
+let typingStarter;
+let currentFeatureId = null;
+
+function formatFeatureText(message) {
+    return message.replace(/◉/g, '\n◉').replace(/^\n/, '');
+}
 
 function showFeatureDetail(id) {
     const card = document.getElementById('cardBox');
     const textTarget = document.getElementById('typing-text');
-    const message = featureDetails[id] || "";
+    const rawMessage = featureDetails[id] || "";
+    const message = formatFeatureText(rawMessage);
 
-    // 1. ล้างค่าเดิม
     clearTimeout(typingTimer);
+    clearTimeout(typingStarter);
     textTarget.innerText = "";
 
-    // ถ้ามีการ์ดเปิดอยู่แล้ว ให้ปิดแป๊บนึงแล้วเปิดใหม่ หรือเปลี่ยนข้อความทันที
+    if (card.classList.contains('active') && currentFeatureId === id) {
+        card.classList.remove('active');
+        currentFeatureId = null;
+        return;
+    }
+
+    currentFeatureId = id;
     card.classList.remove('active');
 
-    // 2. สั่งเปิดการ์ด (ใช้ setTimeout เพื่อให้ Browser ประมวลผลการลบ class ก่อนหน้าทัน)
-    setTimeout(() => {
+    typingStarter = setTimeout(() => {
         card.classList.add('active');
 
-        // 3. เริ่มพิมพ์หลังจาก Animation การขยายช่อง (ประมาณ 500ms) จบลง
         let i = 0;
         function type() {
             if (i < message.length) {
@@ -134,19 +145,20 @@ function showFeatureDetail(id) {
                 typingTimer = setTimeout(type, 40);
             }
         }
-        setTimeout(type, 500);
+
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(type, 500);
     }, 100);
 }
 
-// ผูกเหตุการณ์คลิกให้ปุ่มทั้ง 5
-document.querySelectorAll('.product button').forEach((btn, index) => {
-    // กรองเฉพาะปุ่มที่เป็นจุดบนหูฟัง (สมมติว่าเป็นปุ่ม 5 ปุ่มแรกใน .product)
-    if (index < 5) {
-        btn.onclick = (e) => {
-            e.stopPropagation();
-            showFeatureDetail(index + 1);
-        };
-    }
+// ผูกเหตุการณ์คลิกให้ปุ่มฟีเจอร์ทั้งหมด และรองรับการสลับเปิด/ปิดการ์ด
+document.querySelectorAll('.dataCard').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const featureId = Number(btn.dataset.feature);
+        if (!featureId) return;
+        showFeatureDetail(featureId);
+    });
 });
 
 // Simulation code
