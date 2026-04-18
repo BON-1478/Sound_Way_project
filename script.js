@@ -16,41 +16,49 @@ const slider = document.querySelector('#slider');
 let isDown = false;
 let startX;
 let scrollLeft;
+let velocity = 0; // เก็บความเร็วในการสะบัด
+let rafID; // สำหรับทำ Animation Frame
 
-let isHover = false;
+// ฟังก์ชันสำหรับคำนวณการไหลต่อเนื่อง (Momentum)
+function beginMomentum() {
+    slider.scrollLeft += velocity; // ให้ไหลไปตามความเร็ว
+    velocity *= 0.95; // ค่อยๆ ลดความเร็วลง (แรงเสียดทาน)
 
-slider.addEventListener('mouseenter', (e) => {
-    isHover = true;
-    startX = e.pageX - slider.offsetLeft;
-    scrollLeft = slider.scrollLeft;
-});
-
-slider.addEventListener('mouseleave', () => {
-    isHover = false;
-});
-
-slider.addEventListener('mousemove', (e) => {
-    if (!isHover) return;
-
-    const x = e.pageX - slider.offsetLeft;
-    const walk = (x - startX) * 2;
-    slider.scrollLeft = scrollLeft - walk;
-});
+    if (Math.abs(velocity) > 0.5) { // ถ้ายังมีความเร็วเหลืออยู่ให้รันต่อ
+        rafID = requestAnimationFrame(beginMomentum);
+    }
+}
 
 slider.addEventListener('mousedown', (e) => {
     isDown = true;
-    startX = e.pageX;
+    slider.classList.add('active'); // ใส่ class เผื่ออยากเปลี่ยน cursor
+    startX = e.pageX - slider.offsetLeft;
     scrollLeft = slider.scrollLeft;
+
+    cancelAnimationFrame(rafID); // หยุด Momentum ทันทีเมื่อคลิกลากใหม่
 });
 
-slider.addEventListener('mouseup', () => isDown = false);
-slider.addEventListener('mouseleave', () => isDown = false);
+slider.addEventListener('mouseleave', () => {
+    isDown = false;
+});
+
+slider.addEventListener('mouseup', () => {
+    isDown = false;
+    beginMomentum(); // เริ่มการไหลเมื่อปล่อยเมาส์
+});
 
 slider.addEventListener('mousemove', (e) => {
     if (!isDown) return;
+    e.preventDefault();
 
-    const dx = e.pageX - startX;
-    slider.scrollLeft = scrollLeft - dx;
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2;
+
+    const prevScrollLeft = slider.scrollLeft;
+    slider.scrollLeft = scrollLeft - walk;
+
+    // คำนวณความเร็วจากการเลื่อนล่าสุด
+    velocity = slider.scrollLeft - prevScrollLeft;
 });
 
 // TOUCH

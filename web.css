@@ -243,6 +243,19 @@ main {
     /* ซ่อน Scrollbar ใน WebKit browsers */
 }
 
+#slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: auto; /* สำคัญ: ต้องเป็น auto ขณะลากด้วย JS ไม่เช่นนั้น Momentum จะกระตุก */
+    -webkit-overflow-scrolling: touch; /* สำหรับ Momentum ในมือถือ (Native) */
+    cursor: grab;
+}
+
+#slider:active {
+    cursor: grabbing;
+    scroll-snap-type: none; /* ปิด Snap ชั่วคราวขณะลากเพื่อให้ Momentum ทำงานอิสระ */
+}
+
 .card {
     scroll-snap-align: center;
     flex: 0 0 50vw;
