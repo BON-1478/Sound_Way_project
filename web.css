@@ -141,8 +141,13 @@ section {
 }
 
 .leftside {
+    margin: 40px 0;
     flex: 1;
     padding: 20px;
+    background-color: var(--white-text);
+    border-radius: 20px;
+    box-shadow: 5px 5px 33px -7px var(--blue-soft);
+    position: relative;
 }
 
 .leftside h1 {
@@ -158,6 +163,52 @@ section {
     margin-bottom: 30px;
     font-family: var(--font-text);
     color: var(--brown-main);
+}
+
+.dot-wrap {
+    width: 70px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: 1px solid gray;
+    padding: 8px 5px;
+    border-radius: 20px;
+    transform: scale(0.6);
+}
+
+.dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: none;
+}
+
+.dot:nth-of-type(1) {
+    background: red;
+}
+
+.dot:nth-of-type(2) {
+    background: rgb(223, 182, 0);
+}
+
+.dot:nth-of-type(3) {
+    background: rgb(0, 165, 0);
+}
+
+.dot-wrap:hover {
+    transform: scale(1);
+    transition: .2s ease;
+}
+
+.dot:hover {
+    transform: scale(1.3);
+    transition: .2s ease-in;
 }
 
 main {
@@ -247,6 +298,7 @@ main {
     /* ของเดิมของคุณ */
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform, max-height;
+    margin-bottom: 20px;
 }
 
 .product img {
@@ -366,7 +418,7 @@ footer {
     align-items: center;
     gap: 20px;
     backdrop-filter: blur(3px);
-    border-radius: 30px 30px 0 0;
+    border-radius: 20px 20px 0 0;
     z-index: 10;
 }
 
@@ -399,7 +451,7 @@ footer p {
     font-size: 1rem;
 }
 
-#simulation {
+.simulation {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -414,7 +466,7 @@ footer p {
     width: 380px;
     max-width: 400px;
     height: 400px;
-    background-color: var(--skyblue-deep);
+    background: var(--white-text);
     border-radius: 20px;
     position: relative;
     /* สำคัญ: เพื่อให้วัตถุข้างในอ้างอิงตำแหน่งได้ */
@@ -424,11 +476,34 @@ footer p {
 
 .way {
     position: absolute;
-    bottom: 15%;
+    bottom: 16%;
     left: 52%;
     transform: translate(-50%, -50%);
     rotate: 270deg;
     color: var(--blue-deep);
+    animation: blink .5s infinite ease-in;
+    z-index: 10;
+    cursor: default;
+}
+
+.canvas {
+    position: absolute;
+    ;
+
+    /* สร้างเส้นตารางด้วย Gradient */
+    background-image:
+        linear-gradient(rgba(114, 114, 114, 0.308) 1px, transparent 1px),
+        /* เส้นแนวนอน */
+        linear-gradient(90deg, rgba(114, 114, 114, 0.308) 1px, transparent 1px);
+    /* เส้นแนวตั้ง */
+
+    /* ปรับขนาดของช่องตาราง (ในที่นี้คือช่องละ 20px x 20px) */
+    background-size: 54px 54px;
+
+    /* ตกแต่งเพิ่มเติมเพื่อให้ดูเหมือนหน้าจอเรดาร์ */
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
 }
 
 /* ปรับแต่งตัวผู้ใช้ (User) */
@@ -436,13 +511,14 @@ footer p {
     width: 50px;
     height: 50px;
     position: absolute;
-    bottom: -3%;
+    bottom: -2%;
     left: 50%;
     z-index: 10;
     transition: transform 0.1s;
     /* คุณสามารถแก้ CSS ตรงนี้ได้เลย เช่นใส่เงาหรือเปลี่ยนรูป */
     filter: drop-shadow(0 0 5px rgba(26, 26, 26, 0.5));
-    transform: translateX(-50%) scaleY(-1);
+    transform: translateX(-50%);
+    animation: walking .5s infinite;
 }
 
 /* ปรับแต่งวัตถุจำลอง (Objects) */
@@ -494,8 +570,9 @@ footer p {
 .zone-ai {
     width: 500px;
     height: 500px;
-    background: var(--ai-zone-color);
+    background: #bce0fd77;
     border: 3px dashed var(--brown-medium);
+    -webkit-box-shadow: inset 0px 0px 33px 2px #bce0fdcc;
 }
 
 .zone-tof {
@@ -503,12 +580,14 @@ footer p {
     height: 170px;
     background: var(--tof-zone-color);
     border: 2px dashed rgba(255, 70, 70, 0.3);
+    -webkit-box-shadow: inset 0px 0px 33px 2px rgba(255, 70, 70, 0.3);
 }
 
 .cloneAi {
     width: 500px;
     height: 500px;
-    background: var(--blue-soft);
+    background: #bce0fd56;
+    border: 1px solid #bce0fdcc;
     animation: beepAi 1s ease-in-out infinite;
 }
 
@@ -518,6 +597,16 @@ footer p {
     background: var(--tof-zone-color);
     border: 1px solid rgba(255, 70, 70, 0.3);
     animation: beepTof 1s ease-in-out infinite;
+}
+
+@keyframes walking {
+    from {
+        content: url(img/stand.png);
+    }
+
+    to {
+        content: url(img/walking.png);
+    }
 }
 
 @keyframes pop {
@@ -590,7 +679,14 @@ footer p {
     gap: 30px;
     flex-wrap: wrap;
     width: 80%;
+    max-width: 400px;
+    height: fit-content;
+    padding: 10px;
+    align-items: center;
     justify-content: center;
+    background-color: var(--white-text);
+    border-radius: 20px;
+    box-shadow: 5px 5px 33px -7px var(--blue-soft);
 }
 
 .controls button {
@@ -599,7 +695,6 @@ footer p {
     width: 50px;
     height: 50px;
     border: none;
-    background: var(--brown-medium);
     border: 2px solid var(--white-text);
     box-shadow: 0px 0px 0px 4px var(--brown-main);
     color: var(--white-text);
@@ -610,12 +705,27 @@ footer p {
     font-size: 1em;
 }
 
+.controls button:nth-of-type(1) {
+    box-shadow: 0px 0px 0px 4px red;
+    background-color: rgba(255, 0, 0, 0.692);
+}
+
+.controls button:nth-of-type(2) {
+    box-shadow: 0px 0px 0px 4px rgb(223, 182, 0);
+    background-color:  rgba(223, 182, 0, 0.692);
+}
+
+.controls button:nth-of-type(3) {
+    box-shadow: 0px 0px 0px 4px rgb(0, 165, 0);
+    background-color:  rgba(0, 165, 0, 0.692);
+}
+
 .controls button:nth-child(4) {
-    background: var(--blue-medium);
+    background-color: rgba(255, 106, 0, 0.692);
     width: 120px;
     border-radius: 20px;
     border: 2px solid var(--white-text);
-    box-shadow: 0px 0px 0px 4px var(--blue-deep);
+    box-shadow: 0px 0px 0px 4px #ff6a00;
     color: var(--white-text);
 }
 

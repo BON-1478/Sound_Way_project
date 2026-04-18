@@ -76,8 +76,13 @@
             </div>
     </main>
 
-    <section>
+    <section id="simulation">
         <div class="leftside">
+            <div class="dot-wrap">
+                <button class="dot"></button>
+                <button class="dot"></button>
+                <button class="dot"></button>
+            </div>
             <h1>Welcome to Smart Headphones 🎧<br> Simulation</h1>
             <p>Experience the future of sound with our cutting-edge earbuds simulation. Explore the features and
                 capabilities of our smart earbuds in a virtual environment. <br><br>🚧🏃🚌🛤️🏗️🤖👇👇
@@ -85,7 +90,7 @@
         </div>
     </section>
 
-    <section id="simulation">
+    <section class="simulation">
         <div class="controls">
             <button onclick="spawn('รถยนต์')">🚗</button>
             <button onclick="spawn('คนเดิน')">🚶</button>
@@ -93,15 +98,13 @@
             <button onclick="spawnRandom()">🎲 Random</button>
         </div>
         <div id="radar-screen">
-            <div class="way">
-                <h1>❯❯❯❯</h1>
-            </div>
-            <div class="road"></div>
+            <div class="way"><h1>❯❯❯❯</h1></div>
+            <div class="canvas"></div>
             <div class="zone cloneAi"></div>
             <div class="zone cloneTof"></div>
             <div id="ai-circle" class="zone zone-ai"></div>
             <div id="tof-circle" class="zone zone-tof"></div>
-            <img src="img/user.png" id="user-element" class="user" alt="user">
+            <img src="img/stand.png" id="user-element" class="user" alt="user">
         </div>
         <div id="alertBox"></div>
     </section>
