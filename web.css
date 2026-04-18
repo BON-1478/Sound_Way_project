@@ -146,7 +146,7 @@ section {
     padding: 20px;
     background-color: var(--white-text);
     border-radius: 20px;
-    box-shadow: 5px 5px 33px -7px var(--blue-soft);
+    box-shadow: 0px 0px 33px -7px var(--brown-medium);
     position: relative;
 }
 
@@ -227,11 +227,6 @@ main {
     z-index: 10;
 }
 
-.carousel-wrapper {
-    position: relative;
-    width: 100%;
-}
-
 .carousel {
     width: 100%;
     overflow-x: auto;
@@ -239,8 +234,8 @@ main {
     display: flex;
     gap: 1em;
     scroll-behavior: smooth;
-    anchor-name: --carousel;
-    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .carousel::-webkit-scrollbar {
@@ -250,11 +245,14 @@ main {
 
 .card {
     scroll-snap-align: center;
-    flex: 0 0 30em;
+    flex: 0 0 50vw;
+    width: 50vw;
     aspect-ratio: 16 / 9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 1em;
     text-align: center;
-    align-content: center;
     background: none;
     border: 2px solid var(--brown-main);
 }
@@ -471,7 +469,7 @@ footer p {
     position: relative;
     /* สำคัญ: เพื่อให้วัตถุข้างในอ้างอิงตำแหน่งได้ */
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 33px -7px var(--brown-medium);
 }
 
 .way {
@@ -555,7 +553,6 @@ footer p {
     filter: drop-shadow(0 0 10px red) brightness(1.2);
     animation: blink 0.5s infinite alternate;
 }
-
 
 /* รัศมีการตรวจจับ */
 .zone {
@@ -686,7 +683,7 @@ footer p {
     justify-content: center;
     background-color: var(--white-text);
     border-radius: 20px;
-    box-shadow: 5px 5px 33px -7px var(--blue-soft);
+    box-shadow: 0px 0px 33px -7px var(--brown-medium);
 }
 
 .controls button {
