@@ -2,10 +2,10 @@ const menu = document.querySelector('#mobile-menu');
 const navList = document.querySelector('.nav-list');
 
 if (menu) {
-    menu.addEventListener('click', function() {
+    menu.addEventListener('click', function () {
         // เปิด-ปิดเมนู
         navList.classList.toggle('active');
-        
+
         // ถ้าคุณมี CSS สำหรับแปลงร่างปุ่มสามขีดเป็น X
         menu.classList.toggle('is-active');
     });
@@ -69,18 +69,72 @@ slider.addEventListener('touchmove', (e) => {
     slider.scrollLeft = scrollLeft - dx;
 });
 
+// Typing text
+const featureDetails = {
+    1: "ระบบตัดเสียงรบกวน Active Noise Cancelling ปรับระดับอัตโนมัติ",
+    2: "เซนเซอร์ ToF ตรวจจับระยะประชิด ป้องกันการเดินชนสิ่งกีดขวาง",
+    3: "ดีไซน์ Ergonomic สวมใส่สบาย ไม่หลุดง่ายขณะออกกำลังกาย",
+    4: "แบตเตอรี่อึด ใช้งานต่อเนื่องได้สูงสุด 24 ชั่วโมง",
+    5: "เคสชาร์จรองรับ Wireless Charging และ Fast Charge"
+};
+
+let typingTimer;
+
+function showFeatureDetail(id) {
+    const card = document.getElementById('cardBox');
+    const textTarget = document.getElementById('typing-text');
+    const message = featureDetails[id] || "";
+
+    // 1. ล้างค่าเดิม
+    clearTimeout(typingTimer);
+    textTarget.innerText = "";
+
+    // ถ้ามีการ์ดเปิดอยู่แล้ว ให้ปิดแป๊บนึงแล้วเปิดใหม่ หรือเปลี่ยนข้อความทันที
+    card.classList.remove('active');
+
+    // 2. สั่งเปิดการ์ด (ใช้ setTimeout เพื่อให้ Browser ประมวลผลการลบ class ก่อนหน้าทัน)
+    setTimeout(() => {
+        card.classList.add('active');
+
+        // 3. เริ่มพิมพ์หลังจาก Animation การขยายช่อง (ประมาณ 500ms) จบลง
+        let i = 0;
+        function type() {
+            if (i < message.length) {
+                textTarget.innerText += message.charAt(i);
+                i++;
+                typingTimer = setTimeout(type, 40);
+            }
+        }
+        setTimeout(type, 500);
+    }, 100);
+}
+
+// ผูกเหตุการณ์คลิกให้ปุ่มทั้ง 5
+document.querySelectorAll('.product button').forEach((btn, index) => {
+    // กรองเฉพาะปุ่มที่เป็นจุดบนหูฟัง (สมมติว่าเป็นปุ่ม 5 ปุ่มแรกใน .product)
+    if (index < 5) {
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            showFeatureDetail(index + 1);
+        };
+    }
+});
+
 // Simulation code
+// ==========================================
+// Simulation code (แก้ไขจุดศูนย์กลางและความกว้าง)
+// ==========================================
 const screen = document.getElementById('radar-screen');
 const userEl = document.getElementById('user-element');
 const alertBox = document.getElementById('alertBox');
 
 const config = {
-    width: 600,
+    width: 400,      // แก้จาก 600 เป็น 400 ให้ตรงกับ CSS
     height: 400,
-    userX: 300,
-    userY: 375,
-    aiRadius: 250,
-    tofRadius: 85
+    userX: 200,      // ผู้ใช้อยู่ตรงกลางจอพอดี (400 / 2)
+    userY: 375,      // ตำแหน่งแกน Y ของผู้ใช้อยู่ด้านล่าง
+    aiRadius: 250,   // รัศมี AI (ตรงกับความกว้าง 500px ใน CSS)
+    tofRadius: 85    // รัศมี ToF (ตรงกับความกว้าง 170px ใน CSS)
 };
 
 const imageMap = {
@@ -96,8 +150,6 @@ const imageMap = {
     'กระจกใส': 'img/glass.png',
     'default': ''
 };
-
-// user and zone positions set in CSS to center bottom
 
 class SimObject {
     constructor(name, x, y, speed) {
@@ -134,6 +186,7 @@ class SimObject {
 
         if (dist < config.aiRadius && !this.detectedAI) {
             this.detectedAI = true;
+            // เช็คว่าวัตถุอยู่ซ้ายหรือขวาเทียบกับผู้ใช้ที่แกน x = 200
             let side = this.x < config.userX ? 'ซ้าย' : 'ขวา';
             log(`🔊 [AI]: มี ${this.name} ทาง${side}`, 'alert-ai');
         }
@@ -174,14 +227,18 @@ class SimObject {
 let activeObjects = [];
 
 function spawn(name) {
-    let x = name === 'รถยนต์' ? 100 : (name === 'คนเดิน' ? 500 : 300);
+    // ปรับพิกัดเกิดให้ไม่เกิน 400
+    // รถยนต์ชิดซ้าย (80), คนเดินชิดขวา (320), เสาไฟฟ้าตรงกลาง (200)
+    let x = name === 'รถยนต์' ? 80 : (name === 'คนเดิน' ? 320 : 200);
     activeObjects.push(new SimObject(name, x, -50, name === 'เสาไฟฟ้า' ? 0 : 4));
 }
 
 function spawnRandom() {
     const list = ['มอเตอร์ไซค์', 'จักรยาน', 'สุนัข', 'ถังขยะ', 'คนวิ่ง', 'ป้ายจราจร', 'กระจกใส'];
     let name = list[Math.floor(Math.random() * list.length)];
-    let rx = Math.random() * 500 + 50;
+
+    // สุ่มพิกัดแกน X ตั้งแต่ 20 ถึง 380 (ให้อยู่ในระยะขอบจอ 400px พอดี ไม่ล้น)
+    let rx = Math.random() * 360 + 20;
 
     let rs;
     if (name === 'ถังขยะ' || name === 'ป้ายจราจร' || name === 'กระจกใส') rs = 0;

@@ -45,7 +45,8 @@
             </button>
         </div>
     </nav>
-    
+
+    <!-- main -->
     <main id="home">
         <div class="carousel" id="slider">
             <div class="card">Card 1</div>
@@ -59,9 +60,22 @@
             <div class="card">Card 4</div>
             <div class="card">Card 5</div>
         </div>
+
+        <div class="product-wrapper">
+            <div class="product">
+                <img src="img/product_img.png" alt="soundway product">
+                <button class="descriptProductCard" id="dataCard" onclick="showCard1()"></button>
+                <button class="descriptProductCard" id="dataCard" onclick="showCard2()"></button>
+                <button class="descriptProductCard" id="dataCard" onclick="showCard3()"></button>
+                <button class="descriptProductCard" id="dataCard" onclick="showCard4()"></button>
+                <button class="descriptProductCard" id="dataCard" onclick="showCard5()"></button>
+            </div>
+            <div id="cardBox" class="local-card">
+                <h2 id="cardTitle">Feature Detail</h2>
+                <p id="typing-text"></p>
+            </div>
     </main>
 
-    <!-- main -->
     <section>
         <div class="leftside">
             <h1>Welcome to Smart Headphones 🎧<br> Simulation</h1>
@@ -79,6 +93,9 @@
             <button onclick="spawnRandom()">🎲 สุ่มวัตถุ</button>
         </div>
         <div id="radar-screen">
+            <div class="way">
+                <h1>❯❯❯❯</h1>
+            </div>
             <div class="road"></div>
             <div class="zone cloneAi"></div>
             <div class="zone cloneTof"></div>

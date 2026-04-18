@@ -4,34 +4,31 @@
 
 :root {
     /* theme blue */
-    --blue-main: #a8d8ea;
-    --blue-soft: #dff6ff;
-    --blue-deep: #7cb9e8;
-    /* theme brown */
-    --brown-main: #d2b48c;
-    --brown-soft: #f5e6d3;
-    --brown-deep: #a67b5b;
-    /* theme neutral */
-    --white: #ffffff;
-    --cream: #faf8f4;
-    --gray-light: #eaeaea;
-    --gray-text: #555555;
-    /* accent */
-    --accent: #ffd6a5;
-    --glassmorphism-bg: rgba(255, 255, 255, 0.1);
+    --blue-deep: #05143b;
+    --blue-medium: #40507e;
+    --blue-soft: #74849f;
+    --skyblue-main: #bce0fd;
+    --skyblue-deep: #8595bf;
+    --skyblue-medium: #bac9db;
+    /* brown */
+    --brown-main: #201716;
+    --brown-medium: #4c3a38;
+    /* bacgrond-color */
+    --bg: #b5baba;
+    /* text */
+    --white-text: #e1e8f4;
     /* font */
     --font-nav: 'Changa One', cursive;
     --font-text: 'Inter', cursive;
 
-    --radar-bg: #1a1a2e;
-    --ai-zone-color: rgba(255, 217, 112, 0.15);
+    --ai-zone-color: #74849fb0;
     --tof-zone-color: rgba(255, 70, 70, 0.1);
 }
 
 html,
 body {
     font-family: Arial, sans-serif;
-    background-color: var(--cream);
+    background-color: var(--skyblue-medium);
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
@@ -47,14 +44,12 @@ body {
     align-items: center;
     width: 100%;
     height: 100vh;
-    background-color: var(--cream);
-    color: var(--gray-text);
     margin: 0;
 }
 
 nav {
     width: 90%;
-    background-color: #7cb9e8c2;
+    background-color: var(--brown-medium);
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(5px);
     display: flex;
@@ -64,8 +59,6 @@ nav {
     box-sizing: border-box;
     border-radius: 50px;
     position: fixed;
-    border: 3px solid white;
-    box-shadow: inset 0px 0px 50px -3px var(--blue-soft);
     top: 10px;
     z-index: 999;
 }
@@ -85,13 +78,18 @@ nav .logo img {
     height: 3px;
     margin: 5px auto;
     border-radius: 20px;
-    background-color: var(--white);
+    background-color: var(--white-text);
     transition: all 0.3s ease-in-out;
 }
 
 .hamberger:hover .bar {
     background-color: var(--brown-main);
-    filter: drop-shadow(0 0 5px var(--white));
+    opacity: 1;
+    transition: 0s;
+}
+
+.hamberger .bar:hover {
+    border-radius: 20px;
 }
 
 .nav-list {
@@ -103,17 +101,12 @@ nav .logo img {
 }
 
 .nav-list a {
-    color: var(--white);
+    color: var(--white-text);
     text-decoration: none;
     font-size: 1.1em;
     font-weight: lighter;
     font-family: var(--font-nav);
     letter-spacing: 1px;
-}
-
-.nav-list a:hover {
-    color: var(--brown-main);
-    filter: drop-shadow(0 0 5px var(--white));
 }
 
 nav .acount {
@@ -131,12 +124,13 @@ nav .acount {
 button svg {
     width: 1.8em;
     height: 1.8em;
-    color: var(--white);
+    color: var(--white-text);
 }
 
-button svg:hover {
+button svg:hover,
+.nav-list a:hover {
     color: var(--brown-main);
-    filter: drop-shadow(0 0 5px var(--white));
+    opacity: 1;
 }
 
 section {
@@ -155,6 +149,7 @@ section {
     font-size: 2.5em;
     margin-bottom: 20px;
     font-family: var(--font-text);
+    color: var(--brown-main);
 }
 
 .leftside p {
@@ -162,21 +157,13 @@ section {
     line-height: 1.5;
     margin-bottom: 30px;
     font-family: var(--font-text);
-}
-
-.leftside a {
-    color: var(--blue-deep);
-    text-decoration: none;
-    font-size: 1rem;
-    font-family: var(--font-nav);
-}
-
-.leftside a:hover {
-    text-decoration: underline;
-    text-decoration-color: var(--blue-deep);
+    color: var(--brown-main);
 }
 
 main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex: 1;
     width: 100%;
     padding: 60px 50px 0 50px;
@@ -210,42 +197,6 @@ main {
     /* ซ่อน Scrollbar ใน WebKit browsers */
 }
 
-.carousel::scroll-button(right),
-.carousel::scroll-button(left) {
-    content: "»";
-    border: none;
-    background: none;
-    font-family: Consolas;
-    font-size: 3rem;
-    height: 30px;
-    width: 30px;
-    padding-bottom: .1em;
-    cursor: pointer;
-    color: var(--gray-text);
-    position: fixed;
-    left: -70%;
-    position-anchor: --carousel;
-    position-area: right center;
-}
-
-.carousel::scroll-button(left) {
-    content: "«";
-    position-area: left center;
-    right: -70%;
-}
-
-.carousel::scroll-button(left):active,
-.carousel::scroll-button(right):active {
-    transform: scale(1.2);
-    transition: transform 0.2s ease-in-out;
-}
-
-.carousel::scroll-button(right):disabled,
-.carousel::scroll-button(left):disabled {
-    opacity: 0;
-    cursor: auto;
-}
-
 .card {
     scroll-snap-align: center;
     flex: 0 0 30em;
@@ -254,12 +205,12 @@ main {
     text-align: center;
     align-content: center;
     background: none;
-    border: 2px solid var(--brown-deep);
+    border: 2px solid var(--brown-main);
 }
 
 .card:hover {
-    background-color: var(--brown-deep);
-    color: var(--white);
+    background-color: var(--brown-medium);
+    color: var(--white-text);
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
     cursor: grab;
 }
@@ -268,10 +219,144 @@ main {
     cursor: grabbing;
 }
 
+.product-wrapper {
+    width: 100%;
+    max-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+.product {
+    position: relative;
+    /* สำคัญมาก: ทำให้ปุ่มอ้างอิงพิกัดจากกรอบนี้ */
+    width: 100%;
+    /* ขนาดเท่ากับความกว้างรูป */
+    max-width: 400px;
+    /* เผื่อสำหรับทำ Responsive ในอนาคต */
+    min-width: 300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.5s ease;
+    /* ของเดิมของคุณ */
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, max-height;
+}
+
+.product img {
+    position: static;
+    width: 100%;
+    /* แก้จาก 400px เป็น 100% ให้เต็มกรอบ .product */
+    height: auto;
+    display: block;
+    /* ป้องกันช่องว่างด้านล่างรูป */
+    z-index: 10;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product button {
+    position: absolute;
+    border-radius: 50%;
+    width: 5%;
+    aspect-ratio: 1 / 1;
+    min-width: 30px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    border: 4px solid var(--skyblue-deep);
+    -webkit-filter: blur(3px);
+    z-index: 100;
+    animation: pop 1s infinite;
+    transform: translate(-50%, -50%);
+    /* เพิ่มบรรทัดนี้: เพื่อให้จุดศูนย์กลางของปุ่มอยู่ตรงกับพิกัด % พอดี */
+}
+
+.product button:nth-of-type(1) {
+    top: 35%;
+    left: 23%;
+}
+
+.product button:nth-of-type(2) {
+    top: 20%;
+    left: 20%;
+}
+
+.product button:nth-of-type(3) {
+    top: 60%;
+    left: 8%;
+}
+
+.product button:nth-of-type(4) {
+    top: 48%;
+    left: 58%;
+}
+
+.product button:nth-of-type(5) {
+    top: 75%;
+    left: 86%;
+}
+
+.product button:hover {
+    border: 4px solid white;
+    -webkit-filter: blur(1px);
+    transform: scale(1.1);
+    animation: pop 0s;
+    box-shadow: 0px 0px 26px 3px var(--blue-medium), inset 0px 0px 26px 2px var(--blue-medium);
+}
+
+.product button:active {
+    transform: scale(1.2);
+}
+
+.local-card {
+    overflow: hidden;
+    max-height: 0;
+    width: 0;
+    /* เริ่มต้นความกว้างเป็น 0 */
+    opacity: 10;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: #74849f44;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border-radius: 20px;
+    line-height: 2px;
+    color: var(--brown-main);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-family: var(--font-text);
+}
+
+/* เมื่อสั่งเปิดผ่าน JS */
+.local-card.active {
+    max-height: 200px;
+    /* กำหนดค่าที่มากพอสำหรับข้อความ (จะทำให้เกิดการดันพื้นที่) */
+    opacity: 1;
+    margin-bottom: 20px;
+    /* ดันระยะห่างจากขอบล่าง */
+    padding: 20px;
+    border-width: 2px;
+    /* แสดงขอบขึ้นมา */
+}
+
+#typing-text {
+    font-family: 'Athiti', sans-serif;
+    color: var(--brown-medium);
+    white-space: pre-wrap;
+    line-height: 1.6;
+    margin: 0;
+}
+
 footer {
     width: 100%;
-    background-color: #7cb9e8c2;
-    color: var(--white);
+    background-color: var(--brown-main);
+    color: var(--white-text);
     padding: 10px 0;
     margin: 0;
     padding: 20% 0;
@@ -281,8 +366,6 @@ footer {
     align-items: center;
     gap: 20px;
     backdrop-filter: blur(3px);
-    box-shadow: inset 0px 0px 50px -3px var(--blue-soft);
-    border-top: 3px solid white;
     border-radius: 30px 30px 0 0;
     z-index: 10;
 }
@@ -294,7 +377,7 @@ footer {
 }
 
 .icon {
-    color: var(--white);
+    color: var(--white-text);
     text-decoration: none;
     aspect-ratio: 1 / 1;
 }
@@ -305,15 +388,11 @@ footer .icon svg {
 }
 
 footer .icon:hover {
-    color: var(--accent);
-}
-
-footer .icon:hover svg {
-    filter: drop-shadow(0 0 5px var(--accent));
+    color: var(--brown-medium);
 }
 
 footer .icon:active {
-    color: var(--white);
+    color: var(--white-text);
 }
 
 footer p {
@@ -332,16 +411,24 @@ footer p {
 /* simulation */
 /* หน้าจอเรดาร์ */
 #radar-screen {
-    width: 600px;
-    max-width: 600px;
+    width: 400px;
+    max-width: 400px;
     height: 400px;
-    background-color: #7cb9e8c2;
+    background-color: var(--skyblue-deep);
     border-radius: 20px;
     position: relative;
     /* สำคัญ: เพื่อให้วัตถุข้างในอ้างอิงตำแหน่งได้ */
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0px 0px 50px -3px var(--blue-soft);
-    border: 4px solid white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.way {
+    position: absolute;
+    bottom: 15%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+    rotate: 270deg;
+    color: var(--blue-deep);
 }
 
 /* ปรับแต่งตัวผู้ใช้ (User) */
@@ -349,12 +436,12 @@ footer p {
     width: 50px;
     height: 50px;
     position: absolute;
-    bottom: 0;
+    bottom: -3%;
     left: 50%;
     z-index: 10;
     transition: transform 0.1s;
     /* คุณสามารถแก้ CSS ตรงนี้ได้เลย เช่นใส่เงาหรือเปลี่ยนรูป */
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    filter: drop-shadow(0 0 5px rgba(26, 26, 26, 0.5));
     transform: translateX(-50%) scaleY(-1);
 }
 
@@ -378,7 +465,7 @@ footer p {
 
 /* ชื่อวัตถุที่ลอยอยู่บนหัว */
 .object-label {
-    color: white;
+    color: var(--white-text);
     font-size: 10px;
     white-space: nowrap;
     margin-bottom: 2px;
@@ -393,15 +480,6 @@ footer p {
     animation: blink 0.5s infinite alternate;
 }
 
-@keyframes blink {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0.7;
-    }
-}
 
 /* รัศมีการตรวจจับ */
 .zone {
@@ -417,7 +495,7 @@ footer p {
     width: 500px;
     height: 500px;
     background: var(--ai-zone-color);
-    border: 3px dashed var(--brown-deep);
+    border: 3px dashed var(--brown-medium);
 }
 
 .zone-tof {
@@ -427,19 +505,46 @@ footer p {
     border: 2px dashed rgba(255, 70, 70, 0.3);
 }
 
-.cloneAi{
+.cloneAi {
     width: 500px;
     height: 500px;
-    background: var(--ai-zone-color);
+    background: var(--blue-soft);
     animation: beepAi 1s ease-in-out infinite;
 }
 
-.cloneTof{
+.cloneTof {
     width: 170px;
     height: 170px;
     background: var(--tof-zone-color);
     border: 1px solid rgba(255, 70, 70, 0.3);
     animation: beepTof 1s ease-in-out infinite;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(1);
+        -webkit-filter: blur(1px);
+    }
+
+    50% {
+        transform: scale(.5);
+        -webkit-filter: blur(3px);
+    }
+
+    100% {
+        transform: scale(1);
+        -webkit-filter: blur(1px);
+    }
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.7;
+    }
 }
 
 @keyframes beepAi {
@@ -460,7 +565,7 @@ footer p {
     }
 }
 
-@keyframes beepTof{
+@keyframes beepTof {
     0% {
         opacity: 0.5;
         width: 0;
@@ -492,34 +597,32 @@ footer p {
     padding: 10px 20px;
     border-radius: 8px;
     border: none;
-    background: #a67b5be3;
-    box-shadow: inset 0px 0px 40px -8px var(--brown-soft);
-    color: var(--white);
+    background: var(--brown-main);
+    color: var(--white-text);
     cursor: pointer;
 }
 
-.controls button:nth-child(4){
-    background: #7cb9e8c2;
-    box-shadow: inset 0px 0px 40px -8px var(--blue-soft);
+.controls button:nth-child(4) {
+    background: var(--blue-deep);
+    width: 120px;
 }
 
-.controls button:hover{
+.controls button:hover {
     transform: scale(1.1);
     transition: .1s ease-in-out;
 }
 
 #alertBox {
-    width: 600px;
+    width: 400px;
     height: 150px;
-    background: #a67b5ba4;
-    box-shadow: inset 0px 0px 40px -3px var(--brown-soft);
+    background: var(--brown-main);
     color: #ff0000;
     padding: 15px;
     border-radius: 10px;
     overflow-y: auto;
     font-family: monospace;
     margin-top: 20px;
-    font-size: 1.2rem;
+    font-size: .9rem;
 }
 
 #alertBox::-webkit-scrollbar {
@@ -541,7 +644,51 @@ footer p {
     }
 }
 
+@media(min-width: 768px) {
+    .product.active-layout {
+        flex-direction: row;
+        /* เปลี่ยนเป็นเรียงข้างกันเมื่อมีการกดปุ่ม */
+        gap: 30px;
+        align-items: center;
+    }
+
+    .product.active-layout img {
+        /* รูปจะไม่อยู่ตรงกลางเป๊ะของจอ แต่จะอยู่ตรงกลางของฝั่งซ้าย */
+        transform: translateX(0);
+    }
+
+    .local-card.active {
+        max-height: 500px;
+        width: 400px;
+        /* กำหนดความกว้างของการ์ดที่แน่นอน */
+        opacity: 1;
+        padding: 25px;
+        background: none;
+        background-color: #74849f44;
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        border-radius: 20px;
+        line-height: 2px;
+        color: var(--brown-main);
+    }
+}
+
 @media (max-width: 768px) {
+
+    .local-card.active {
+        max-height: 300px;
+        width: 90%;
+        opacity: 1;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #74849f44;
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        border-radius: 20px;
+        line-height: 2px;
+        color: var(--brown-main);
+    }
+
     .hamberger {
         /* โชว์ปุ่มสามขีด */
         display: block;
@@ -566,8 +713,7 @@ footer p {
         top: 80px;
         /* แนะนำให้ปรับ top ลงมาอีกนิดเพื่อไม่ให้ทับกับ Navbar (ลองกะระยะดูครับ) */
         right: 5px;
-        background-color: #7cb9e8c2;
-        box-shadow: inset 0px 0px 50px -3px var(--blue-soft);
+        background-color: var(--brown-medium);
         backdrop-filter: blur(3px);
         border-radius: 10px;
         padding: 15px 10px;
@@ -581,7 +727,7 @@ footer p {
     }
 
     .nav-list a {
-        color: var(--white);
+        color: var(--white-text);
         width: 95%;
         height: 25%;
         display: flex;
@@ -592,27 +738,27 @@ footer p {
 
     .nav-list a:hover {
         background: var(--brown-main);
-        color: var(--white);
+        color: var(--white-text);
         border-radius: 5px;
-        transition: background-color 0.4s ease-in-out, color 0.2s ease-in-out;
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
     }
 
     /* คลาสสำหรับสั่งให้โชว์เมนู (จะใช้ JS ช่วยเพิ่มคลาสนี้) */
     .nav-list.active {
         display: flex;
     }
+}
 
-    @keyframes floatingBox {
-        0% {
-            transform: translateY(0);
-        }
+@keyframes floatingBox {
+    0% {
+        transform: translateY(0);
+    }
 
-        50% {
-            transform: translateY(-10px);
-        }
+    50% {
+        transform: translateY(-10px);
+    }
 
-        100% {
-            transform: translateY(0);
-        }
+    100% {
+        transform: translateY(0);
     }
 }
