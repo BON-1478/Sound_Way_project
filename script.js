@@ -259,7 +259,7 @@ function spawn(name) {
     // ปรับพิกัดเกิดให้ไม่เกิน 400
     // รถยนต์ชิดซ้าย (80), คนเดินชิดขวา (320), เสาไฟฟ้าตรงกลาง (200)
     let x = name === 'รถยนต์' ? 80 : (name === 'คนเดิน' ? 320 : 200);
-    activeObjects.push(new SimObject(name, x, -50, name === 'เสาไฟฟ้า' ? 0 : 4));
+    activeObjects.push(new SimObject(name, x, -50, name === 'กระจกใส' ? 0 : 4));
 }
 
 function spawnRandom() {

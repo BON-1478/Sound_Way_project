@@ -232,7 +232,6 @@ main {
     overflow-x: auto;
     margin: 3em auto;
     display: flex;
-    gap: 1em;
     scroll-behavior: smooth;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -258,13 +257,12 @@ main {
 
 .card {
     scroll-snap-align: center;
-    flex: 0 0 50vw;
-    width: 50vw;
+    flex: 0 0 60vw;
+    width: 100%;
     aspect-ratio: 16 / 9;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1em;
     text-align: center;
     background: none;
     border: 2px solid var(--brown-main);
@@ -283,7 +281,7 @@ main {
 
 .product-wrapper {
     width: 100%;
-    max-height: 100vh;
+    max-height: 110vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -291,6 +289,8 @@ main {
     padding: 20px;
     box-sizing: border-box;
     flex-wrap: wrap;
+    background-color: var(--blue-medium);
+    border-radius: 20px;
 }
 
 .product {
@@ -384,12 +384,10 @@ main {
     /* เริ่มต้นความกว้างเป็น 0 */
     opacity: 10;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: #74849f44;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
     border-radius: 20px;
     line-height: 2px;
-    color: var(--brown-main);
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -612,10 +610,12 @@ footer p {
 @keyframes walking {
     from {
         content: url(img/stand.png);
+        transition: 5s ease-in-out;
     }
 
     to {
         content: url(img/walking.png);
+        transition: 5s ease-in-out;
     }
 }
 
@@ -798,9 +798,8 @@ footer p {
         opacity: 1;
         padding: 25px;
         background: none;
-        background-color: #74849f44;
-        backdrop-filter: blur(3px);
-        -webkit-backdrop-filter: blur(3px);
+        background-color: #bac9db;
+        box-shadow: 0 0 26px 1px #bac9db;
         border-radius: 20px;
         line-height: 2px;
         color: var(--brown-main);
@@ -815,9 +814,8 @@ footer p {
         opacity: 1;
         margin-top: 20px;
         padding: 20px;
-        background-color: #74849f44;
-        backdrop-filter: blur(3px);
-        -webkit-backdrop-filter: blur(3px);
+        background-color: #bac9db;
+        box-shadow: 0 0 26px 1px #bac9db;
         border-radius: 20px;
         line-height: 2px;
         color: var(--brown-main);
