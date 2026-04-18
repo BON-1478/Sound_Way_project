@@ -28,7 +28,7 @@
 html,
 body {
     font-family: Arial, sans-serif;
-    background-color: var(--skyblue-medium);
+    background: var(--skyblue-main);
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
@@ -411,7 +411,7 @@ footer p {
 /* simulation */
 /* หน้าจอเรดาร์ */
 #radar-screen {
-    width: 400px;
+    width: 380px;
     max-width: 400px;
     height: 400px;
     background-color: var(--skyblue-deep);
@@ -587,7 +587,7 @@ footer p {
 .controls {
     margin: 20px;
     display: flex;
-    gap: 10px;
+    gap: 30px;
     flex-wrap: wrap;
     width: 80%;
     justify-content: center;
@@ -595,16 +595,28 @@ footer p {
 
 .controls button {
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
     border: none;
-    background: var(--brown-main);
+    background: var(--brown-medium);
+    border: 2px solid var(--white-text);
+    box-shadow: 0px 0px 0px 4px var(--brown-main);
     color: var(--white-text);
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
 }
 
 .controls button:nth-child(4) {
-    background: var(--blue-deep);
+    background: var(--blue-medium);
     width: 120px;
+    border-radius: 20px;
+    border: 2px solid var(--white-text);
+    box-shadow: 0px 0px 0px 4px var(--blue-deep);
+    color: var(--white-text);
 }
 
 .controls button:hover {
@@ -613,7 +625,9 @@ footer p {
 }
 
 #alertBox {
-    width: 400px;
+    width: 80%;
+    max-width: 400px;
+    min-width: 300px;
     height: 150px;
     background: var(--brown-main);
     color: #ff0000;

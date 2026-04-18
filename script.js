@@ -129,9 +129,9 @@ const userEl = document.getElementById('user-element');
 const alertBox = document.getElementById('alertBox');
 
 const config = {
-    width: 400,      // แก้จาก 600 เป็น 400 ให้ตรงกับ CSS
+    width: 380,      // แก้จาก 600 เป็น 400 ให้ตรงกับ CSS
     height: 400,
-    userX: 200,      // ผู้ใช้อยู่ตรงกลางจอพอดี (400 / 2)
+    userX: 190,      // ผู้ใช้อยู่ตรงกลางจอพอดี (400 / 2)
     userY: 375,      // ตำแหน่งแกน Y ของผู้ใช้อยู่ด้านล่าง
     aiRadius: 250,   // รัศมี AI (ตรงกับความกว้าง 500px ใน CSS)
     tofRadius: 85    // รัศมี ToF (ตรงกับความกว้าง 170px ใน CSS)
