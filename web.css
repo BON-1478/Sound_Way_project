@@ -930,6 +930,10 @@ footer p {
     .card {
         flex: 0 0 100%;
     }
+
+    .local-card.active{
+        font-size: .8em;
+    }
 }
 
 @media(min-width: 768px) {
