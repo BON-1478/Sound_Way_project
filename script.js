@@ -100,12 +100,18 @@ slider.addEventListener('mousemove', (e) => {
 
 // Typing text
 const featureDetails = {
-    1: "◉ ระบบตัดเสียงรบกวน Active Noise Cancelling ปรับระดับอัตโนมัติ",
-    2: "◉ เซนเซอร์ ToF ตรวจจับระยะประชิด ป้องกันการเดินชนสิ่งกีดขวาง ◉ สัมผัสการรับรู้รอบทิศทาง 360° เหนือขีดจำกัดสายตา ด้วยระบบแจ้งเตือนอัจฉริยะที่ช่วยให้คุณ 'เห็น' อันตรายก่อนที่จะเกิดขึ้นจริง",
-    3: "◉ ดีไซน์ Ergonomic สวมใส่สบาย ไม่หลุดง่ายขณะออกกำลังกาย",
-    4: "◉ แบตเตอรี่อึด ใช้งานต่อเนื่องได้สูงสุด 24 ชั่วโมง",
-    5: "◉ เคสชาร์จรองรับ Wireless Charging และ Fast Charge"
+    1: "◉ 'ระบบเสียง 3มิติ' ผสานการทำงานของ Spatial Audio ที่ให้เสียงนำทางแบบ 3 มิติสมจริง และ Vibration Motor ที่สั่นเตือนบอกทิศทางอันตรายได้อย่างแม่นยำผ่านผิวสัมผัส ช่วยให้คุณตัดสินใจได้ทันท่วงที",
+    2: "◉ 'เซนเซอร์อัจฉริยะ' รวมพลัง Global Shutter Camera ที่จับภาพได้คมชัดไร้การบิดเบี้ยว ทำงานร่วมกับ mmWave Sensor เรดาร์ตรวจจับวัตถุระยะไกล และ ToF Sensor ที่สแกนระยะประชิด เพื่อการรับรู้รอบตัวแบบ 360 องศาในทุกสภาวะแสง",
+    3: "◉ 'ขับเคลื่อนนวัตกรรมอย่างไม่มีสะดุด' ด้วย Battery เซลล์เก็บไฟความหนาแน่นสูงที่จ่ายไฟได้นิ่งสนิทและชาร์จได้อย่างรวดเร็ว พร้อมระบบ Heatsink ระบายความร้อนประสิทธิภาพสูงที่ช่วยให้หูฟังทำงานได้อย่างเสถียรและปลอดภัยตลอดการสวมใส่",
+    4: "◉ Edge AI Chip สำหรับวิเคราะห์ข้อมูลฉับไวในตัวเครื่อง และ IMU Sensor ที่คอยตรวจจับทิศทางและความเร็วการเดิน เพื่อปรับการนำทางให้เป็นหนึ่งเดียวกับคุณ พร้อมพื้นที่จัดเก็บทุกการตั้งค่าส่วนบุคคลไว้พร้อมใช้งาน"
 };
+
+const headerDetails = {
+    1: "Instinctive Alerts",
+    2: "Environment Scanning",
+    3: "Endless Mobility",
+    4: "Seamless Integration"
+}
 
 let typingTimer;
 let typingStarter;
@@ -115,15 +121,23 @@ function formatFeatureText(message) {
     return message.replace(/◉/g, '\n◉').replace(/^\n/, '');
 }
 
+function formatHeader(title){
+    return title;
+}
+
 function showFeatureDetail(id) {
     const card = document.getElementById('cardBox');
     const textTarget = document.getElementById('typing-text');
+    const cardTitle = document.getElementById('cardTitle');
     const rawMessage = featureDetails[id] || "";
+    const header = headerDetails[id] || "";
     const message = formatFeatureText(rawMessage);
+    const title = formatHeader(header);
 
     clearTimeout(typingTimer);
     clearTimeout(typingStarter);
     textTarget.innerText = "";
+    cardTitle.innerText = "";
 
     if (card.classList.contains('active') && currentFeatureId === id) {
         card.classList.remove('active');
@@ -141,6 +155,7 @@ function showFeatureDetail(id) {
         function type() {
             if (i < message.length) {
                 textTarget.innerText += message.charAt(i);
+                cardTitle.innerText += title.charAt(i);
                 i++;
                 typingTimer = setTimeout(type, 40);
             }
@@ -299,5 +314,31 @@ function loop() {
     activeObjects.forEach(obj => obj.update());
     requestAnimationFrame(loop);
 }
+
+// Change product image
+const changeImageBtn = document.getElementById('changeImageBtn');
+const productImg = document.querySelector('.product img');
+
+// เก็บ Path รูปภาพไว้ (ตรวจสอบชื่อไฟล์ให้ถูกต้องด้วยนะครับ)
+const imgOriginal = "img/main.png";
+const imgNew = "img/x-ray.png"; // เปลี่ยนเป็นชื่อไฟล์รูปที่ 2 ของคุณ
+
+changeImageBtn.addEventListener('change', function() {
+    if (this.checked) {
+        productImg.src = imgNew;
+    } else {
+        productImg.src = imgOriginal;
+    }
+});
+
+// loading web
+document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.getElementById('loading');
+
+    // ตั้งเวลาให้ปิดหลังจากผ่านไป 2 วินาที (2000 มิลลิวินาที)
+    setTimeout(() => {
+        loader.classList.add('loader-hidden');
+    }, 5000); 
+});
 
 if (screen) loop();

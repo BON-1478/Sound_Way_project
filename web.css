@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Athiti:wght@200;300;400;500;600;700&family=Bebas+Neue&family=Changa+One:ital@0;1&family=Creepster&family=Dancing+Script:wght@400..700&family=Oswald:wght@200..700&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Athiti:wght@200;300;400;500;600;700&family=Bebas+Neue&family=Changa+One:ital@0;1&family=Creepster&family=Dancing+Script:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oswald:wght@200..700&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Athiti:wght@200;300;400;500;600;700&family=Bebas+Neue&family=Changa+One:ital@0;1&family=Creepster&family=Dancing+Script:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Oswald:wght@200..700&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Pridi:wght@200;300;400;500;600;700&display=swap');
 
 
 :root {
@@ -20,9 +21,12 @@
     /* font */
     --font-nav: 'Changa One', cursive;
     --font-text: 'Inter', cursive;
+    --font-thia: 'Pridi', cursive;
 
     --ai-zone-color: #74849fb0;
     --tof-zone-color: rgba(255, 70, 70, 0.1);
+
+    --color-glassmolism-blue: #404f7e86;
 }
 
 html,
@@ -47,11 +51,62 @@ body {
     margin: 0;
 }
 
+#loading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff; /* เปลี่ยนเป็นสีพื้นหลังที่ชอบ */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+    z-index: 10000; /* ต้องสูงกว่า .nav-list */
+    transition: opacity 0.6s ease, visibility 0.6s;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  font-size: 6em;
+  font-family: monospace;
+  font-family: var(--font-nav);
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: #0000;
+  -webkit-text-stroke: 2px var(--brown-main);
+  background: conic-gradient(#bce0fd 0 0) 0/0 100% no-repeat text;
+  animation: l11 2s steps(8,jump-none) infinite;
+}
+.loader:before {
+  content: "Soundway";
+}
+@keyframes l11 {
+  to {background-size: 100% 100%}
+}
+
+/* HTML: <div class="loader"></div> */
+.loaderDot {
+  width: 60px;
+  aspect-ratio: 4;
+  background: radial-gradient(circle closest-side,#000 90%,#0000) 0/calc(100%/3) 100% space;
+  clip-path: inset(0 100% 0 0);
+  animation: l1 2s steps(4) infinite;
+}
+@keyframes l1 {to{clip-path: inset(0 -34% 0 0)}}
+
+/* คลาสที่จะสั่งปิดจาก JS */
+.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
 nav {
     width: 90%;
-    background-color: var(--brown-medium);
+    background-color: #4c3a38b4;
     backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(5px);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -133,11 +188,11 @@ button svg:hover,
     opacity: 1;
 }
 
-section {
+.preSimulation {
     width: 100%;
     padding: 0 50px;
-    box-sizing: border-box;
     z-index: 10;
+    box-sizing: border-box;
 }
 
 .leftside {
@@ -146,7 +201,6 @@ section {
     padding: 20px;
     background-color: var(--white-text);
     border-radius: 20px;
-    box-shadow: 0px 0px 33px -7px var(--brown-medium);
     position: relative;
 }
 
@@ -232,6 +286,7 @@ main {
     overflow-x: auto;
     margin: 3em auto;
     display: flex;
+    justify-content: center;
     scroll-behavior: smooth;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -245,31 +300,32 @@ main {
 #slider {
     display: flex;
     overflow-x: auto;
-    scroll-behavior: auto; /* สำคัญ: ต้องเป็น auto ขณะลากด้วย JS ไม่เช่นนั้น Momentum จะกระตุก */
-    -webkit-overflow-scrolling: touch; /* สำหรับ Momentum ในมือถือ (Native) */
+    scroll-behavior: auto;
+    /* สำคัญ: ต้องเป็น auto ขณะลากด้วย JS ไม่เช่นนั้น Momentum จะกระตุก */
+    -webkit-overflow-scrolling: touch;
+    /* สำหรับ Momentum ในมือถือ (Native) */
     cursor: grab;
 }
 
 #slider:active {
     cursor: grabbing;
-    scroll-snap-type: none; /* ปิด Snap ชั่วคราวขณะลากเพื่อให้ Momentum ทำงานอิสระ */
+    scroll-snap-type: none;
+    /* ปิด Snap ชั่วคราวขณะลากเพื่อให้ Momentum ทำงานอิสระ */
 }
 
 .card {
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     flex: 0 0 60vw;
-    width: 100%;
-    aspect-ratio: 16 / 9;
+    width: 70%;
+    aspect-ratio: 5 / 7;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: none;
-    border: 2px solid var(--brown-main);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, var(--skyblue-main) 50%);
 }
 
 .card:hover {
-    background-color: var(--brown-medium);
     color: var(--white-text);
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
     cursor: grab;
@@ -289,7 +345,7 @@ main {
     padding: 20px;
     box-sizing: border-box;
     flex-wrap: wrap;
-    background-color: var(--blue-medium);
+    background: radial-gradient(circle, rgba(188, 224, 253, 1) 0%, rgba(64, 80, 126, 1) 100%);
     border-radius: 20px;
 }
 
@@ -309,18 +365,108 @@ main {
     /* ของเดิมของคุณ */
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform, max-height;
-    margin-bottom: 20px;
+
+
+    height: 400px;
+    /* กำหนดความสูงที่แน่นอนให้เท่ากับรูปหลักของคุณ */
+    display: flex;
+    align-items: center;
+    /* จัดรูปให้อยู่กลางแนวตั้ง */
+    justify-content: center;
+    /* จัดรูปให้อยู่กลางแนวนอน */
+    overflow: hidden;
+    /* กันรูปส่วนเกินล้นออก */
+}
+
+/* กรอบนอกของปุ่ม */
+.switch {
+    position: absolute;
+    /* ใช้ absolute เพื่อให้วางทับบนรูปสินค้าได้ตามที่คุณต้องการ */
+    display: inline-block;
+    top: 30px;
+    left: 30px;
+    width: 80px;
+    /* ปรับความกว้างเป็น 80px ตามโจทย์ */
+    height: 40px;
+    transform: scale(0.8);
+    /* ปรับความสูงให้สมดุลกับความกว้าง (ประมาณครึ่งหนึ่ง) */
+    z-index: 10;
+    /* มั่นใจว่าปุ่มอยู่ชั้นบนสุด */
+}
+
+/* ซ่อน Checkbox จริงๆ */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* ตัวรางเลื่อน (Slider) */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #f5f5f51c;
+    border: 2px solid rgba(255, 255, 255, 0.644);
+    backdrop-filter: blur(3px);
+    -webkit-filter: blur(1px);
+    transition: .4s;
+    border-radius: 40px;
+    /* ทำขอบมนเท่ากับความสูง */
+}
+
+/* หัวปุ่มวงกลม */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 32px;
+    /* ปรับให้เล็กลงกว่าความสูงรางเลื่อนเล็กน้อย (40 - 8) */
+    width: 32px;
+    /* เป็นวงกลม */
+    left: 4px;
+    /* ระยะห่างจากขอบซ้าย */
+    bottom: 1px;
+    /* ระยะห่างจากขอบล่าง */
+    background-color: #f5f5f531;
+    border: 2px solid rgba(255, 255, 255, 0.644);
+    transition: .4s;
+    border-radius: 50%;
+    transform: scale(.7);
+}
+
+/* เมื่อกดเปิด (Checked) */
+input:checked+.slider {
+    -webkit-filter: blur(.5px);
+    background-color: #40507e;
+    /* สีเขียวหรือฟ้าตามที่คุณชอบ */
+}
+
+/* การเคลื่อนที่ของหัวปุ่มเมื่อกดเปิด */
+input:checked+.slider:before {
+    /* คำนวณ: ความกว้าง 80 - หัวปุ่ม 32 - ระยะขอบ 4 = 44px */
+    transform: translateX(32px) scale(.7);
 }
 
 .product img {
-    position: static;
-    width: 100%;
+    position: absolute;
     /* แก้จาก 400px เป็น 100% ให้เต็มกรอบ .product */
-    height: auto;
     display: block;
     /* ป้องกันช่องว่างด้านล่างรูป */
     z-index: 10;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+    width: 100%;
+    height: 100%;
+    /* บังคับความสูงให้เต็มกรอบที่ล็อกไว้ */
+    object-fit: contain;
+    /* สำคัญ: เพื่อให้รูปเปลี่ยนแต่ไม่เสียสัดส่วน และไม่ดันขอบ */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* จัดให้อยู่กลางเป๊ะๆ */
 }
 
 .product button {
@@ -332,7 +478,7 @@ main {
     border: none;
     cursor: pointer;
     background: none;
-    border: 4px solid var(--skyblue-deep);
+    border: 4px solid rgb(255, 235, 58);
     -webkit-filter: blur(3px);
     z-index: 100;
     animation: pop 1s infinite;
@@ -341,28 +487,23 @@ main {
 }
 
 .product button:nth-of-type(1) {
-    top: 35%;
-    left: 23%;
+    top: 50%;
+    left: 15%;
 }
 
 .product button:nth-of-type(2) {
-    top: 20%;
-    left: 20%;
+    top: 52%;
+    left: 44%;
 }
 
 .product button:nth-of-type(3) {
-    top: 60%;
-    left: 8%;
+    top: 40%;
+    left: 35%;
 }
 
 .product button:nth-of-type(4) {
-    top: 48%;
-    left: 58%;
-}
-
-.product button:nth-of-type(5) {
-    top: 75%;
-    left: 86%;
+    top: 45%;
+    left: 78%;
 }
 
 .product button:hover {
@@ -382,10 +523,8 @@ main {
     max-height: 0;
     width: 0;
     /* เริ่มต้นความกว้างเป็น 0 */
-    opacity: 10;
+    opacity: 0;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
     border-radius: 20px;
     line-height: 2px;
     display: flex;
@@ -407,8 +546,8 @@ main {
 }
 
 #typing-text {
-    font-family: 'Athiti', sans-serif;
-    color: var(--brown-medium);
+    font-family: var(--font-thia);
+    color: var(--white-text);
     white-space: pre-wrap;
     line-height: 1.6;
     margin: 0;
@@ -462,11 +601,25 @@ footer p {
 
 .simulation {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 90%;
+    border-radius: 20px;
     margin: 0 0 6em 0;
+    padding: 20px;
+    gap: 20px;
+    background-color: var(--white-text);
+}
+
+.display {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 50%;
 }
 
 /* simulation */
@@ -480,7 +633,6 @@ footer p {
     position: relative;
     /* สำคัญ: เพื่อให้วัตถุข้างในอ้างอิงตำแหน่งได้ */
     overflow: hidden;
-    box-shadow: 0px 0px 33px -7px var(--brown-medium);
 }
 
 .way {
@@ -594,9 +746,10 @@ footer p {
 .cloneAi {
     width: 500px;
     height: 500px;
-    background: #bce0fd56;
-    border: 1px solid #bce0fdcc;
+    background: var(--tof-zone-color);
+    border: 1px solid rgba(255, 70, 70, 0.3);
     animation: beepAi 1s ease-in-out infinite;
+    z-index: 100;
 }
 
 .cloneTof {
@@ -621,17 +774,18 @@ footer p {
 
 @keyframes pop {
     0% {
-        transform: scale(1);
+        transform: scale(1.5);
         -webkit-filter: blur(1px);
     }
 
     50% {
         transform: scale(.5);
         -webkit-filter: blur(3px);
+        border: 4px solid rgb(59, 128, 255);
     }
 
     100% {
-        transform: scale(1);
+        transform: scale(1.5);
         -webkit-filter: blur(1px);
     }
 }
@@ -696,7 +850,7 @@ footer p {
     justify-content: center;
     background-color: var(--white-text);
     border-radius: 20px;
-    box-shadow: 0px 0px 33px -7px var(--brown-medium);
+    border: 2px dashed;
 }
 
 .controls button {
@@ -722,12 +876,12 @@ footer p {
 
 .controls button:nth-of-type(2) {
     box-shadow: 0px 0px 0px 4px rgb(223, 182, 0);
-    background-color:  rgba(223, 182, 0, 0.692);
+    background-color: rgba(223, 182, 0, 0.692);
 }
 
 .controls button:nth-of-type(3) {
     box-shadow: 0px 0px 0px 4px rgb(0, 165, 0);
-    background-color:  rgba(0, 165, 0, 0.692);
+    background-color: rgba(0, 165, 0, 0.692);
 }
 
 .controls button:nth-child(4) {
@@ -746,7 +900,7 @@ footer p {
 
 #alertBox {
     width: 80%;
-    max-width: 400px;
+    max-width: 500px;
     min-width: 300px;
     height: 150px;
     background: var(--brown-main);
@@ -755,7 +909,7 @@ footer p {
     border-radius: 10px;
     overflow-y: auto;
     font-family: monospace;
-    margin-top: 20px;
+    margin-bottom: 20px;
     font-size: .9rem;
 }
 
@@ -798,15 +952,25 @@ footer p {
         opacity: 1;
         padding: 25px;
         background: none;
-        background-color: #bac9db;
-        box-shadow: 0 0 26px 1px #bac9db;
+        background-color: #ffffff1e;
         border-radius: 20px;
         line-height: 2px;
+        color: var(--brown-main);
+    }
+
+    #typing-text {
         color: var(--brown-main);
     }
 }
 
 @media (max-width: 768px) {
+
+    .loader{
+        font-size: 3em;
+    }
+    .loaderDot{
+        width: 40px;
+    }
 
     .local-card.active {
         max-height: 300px;
@@ -814,11 +978,15 @@ footer p {
         opacity: 1;
         margin-top: 20px;
         padding: 20px;
-        background-color: #bac9db;
-        box-shadow: 0 0 26px 1px #bac9db;
+        background-color: #ffffff1e;
+        backdrop-filter: blur(3px);
         border-radius: 20px;
         line-height: 2px;
-        color: var(--brown-main);
+        color: var(--white-text);
+    }
+
+    #typing-text {
+        color: var(--white-text);
     }
 
     .hamberger {

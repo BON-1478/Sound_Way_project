@@ -8,6 +8,10 @@
 </head>
 
 <body>
+    <div id="loading">
+        <div class="loader"></div>
+        <div class="loaderDot"></div>
+    </div>
     <!-- nav bar -->
     <nav>
         <div class="logo">
@@ -49,29 +53,29 @@
     <!-- main -->
     <main id="home">
         <div class="carousel" id="slider">
-            <img class="card" src="img/hero.jpg" alt="">
-            <img class="card" src="img/hero.jpg" alt="">
-            <img class="card" src="img/hero.jpg" alt="">
-            <img class="card" src="img/hero.jpg" alt="">
-            <img class="card" src="img/hero.jpg" alt="">
+            <img class="card" src="img/poster1.png" alt="poster1">
         </div>
 
         <div class="product-wrapper">
+            <!-- Rounded switch -->
+            <label class="switch">
+                <input type="checkbox" id="changeImageBtn">
+                <span class="slider round"></span>
+            </label>
             <div class="product">
-                <img src="img/product_img.png" alt="soundway product">
+                <img src="img/main.png" alt="soundway product">
                 <button class="descriptProductCard dataCard" data-feature="1" type="button"></button>
                 <button class="descriptProductCard dataCard" data-feature="2" type="button"></button>
                 <button class="descriptProductCard dataCard" data-feature="3" type="button"></button>
                 <button class="descriptProductCard dataCard" data-feature="4" type="button"></button>
-                <button class="descriptProductCard dataCard" data-feature="5" type="button"></button>
             </div>
             <div id="cardBox" class="local-card">
-                <h2 id="cardTitle">Feature Detail</h2>
+                <h2 id="cardTitle"></h2>
                 <p id="typing-text"></p>
             </div>
     </main>
 
-    <section id="simulation">
+    <section class="preSimulation" id="simulation">
         <div class="leftside">
             <div class="dot-wrap">
                 <button class="dot"></button>
@@ -86,14 +90,10 @@
     </section>
 
     <section class="simulation">
-        <div class="controls">
-            <button onclick="spawn('รถยนต์')">🚗</button>
-            <button onclick="spawn('คนเดิน')">🚶</button>
-            <button onclick="spawn('กระจกใส')">🪞</button>
-            <button onclick="spawnRandom()">🎲 Random</button>
-        </div>
         <div id="radar-screen">
-            <div class="way"><h1 id="way">❯❯❯❯</h1></div>
+            <div class="way">
+                <h1 id="way">❯❯❯❯</h1>
+            </div>
             <div class="canvas"></div>
             <div class="zone cloneAi"></div>
             <div class="zone cloneTof"></div>
@@ -101,7 +101,15 @@
             <div id="tof-circle" class="zone zone-tof"></div>
             <img src="img/stand.png" id="user-element" class="user" alt="user">
         </div>
-        <div id="alertBox"></div>
+        <div class="display">
+            <div class="controls">
+                <button onclick="spawn('รถยนต์')">🚗</button>
+                <button onclick="spawn('คนเดิน')">🚶</button>
+                <button onclick="spawn('กระจกใส')">🪞</button>
+                <button onclick="spawnRandom()">🎲 Random</button>
+            </div>
+            <div id="alertBox"></div>
+        </div>
     </section>
     </section>
     <!-- footer -->
